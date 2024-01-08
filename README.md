@@ -8,7 +8,7 @@
 - Where as Deep Learning No need of Featurization.
 - Deep Learning can Extract the feature from Image, Text, Tabula data, Audio, Video, etc. it automatically extract information.
 - **New Definition:** Deep Learning is basically a mathematical techinique that enable us to extract infromation from any kind of structured/unstructured data using the concept of neuron.
-$$ Y = f(x) $$ Where x can be Tabular/graph/video/Audio/Text/Image etc
+- $$ Y = f(x) $$ Where x can be Tabular/graph/video/Audio/Text/Image etc
 
 ## Why Deep Learning vs Machine Learning?
 
