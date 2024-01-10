@@ -37,4 +37,9 @@
 ### Why Deep Learning vs Machine Learning?
 - for example: predicting secand hand car24, you are not only using tablular data but also image of car, inspection command, service history, or other comments. to pridict the price of second hand car. which machine learning can not do, this is the beauti of deep learning.
 
-## What is Neural Network?
+#### Desision Tree also partiting the data neural network also partiting the data it is like a black box, but we know that how decision tree partiting, verticle lines and horizontal line, but we don't know, how neural network is partiting the data, it is partiting in small small peaces and find the curve. (but there are way to tell us)
+
+### Why the non-linearlity is absolutely vital?
+
+### How Neuron looks like?
+![Alt text](https://learnopencv.com/wp-content/uploads/2017/10/mlp-diagram.jpg)
