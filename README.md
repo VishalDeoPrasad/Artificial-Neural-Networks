@@ -98,14 +98,14 @@ $$
 1. Initise the architecure (define the number of hidden layers, neurons etc)
 1. Randomly initise the weight
 1. Given the weights calculate the loss:-
-    * how do i calculate the loss of regression problem?  
-        The Mean Squared Error (MSE) is calculated using the formula: <br>
+    * how do i calculate the loss of regression problem? 
         MSE = (1/n) * Σ(yᵢ - ŷᵢ)²
         Where:
         - n is the number of observations,
         - yᵢ is the actual value for the i-th observation,
         - ŷᵢ is the predicted value for the i-th observation.
-
+1. Given the loss, update the weithts- Gradient Descent Algorithm + Chain Rule
+1. using the updated weights go to step3 and keep on doing it till you stablise your training loss to the min possible(min val loss)
 
 
 
