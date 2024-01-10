@@ -82,7 +82,7 @@ $$
 $$
 
 - if we add any kind of non linearity then the megic will happen.
-- this is the beauti, i neuron doing the simple task but when you join simple, simple, ... task to data i will become big and solve bigger problem.
+- this is the beauti, 1 neuron doing the simple task but when you join simple, simple, ... task to data i will become big and solve bigger problem.
 
 $$
  n_1 = \tanh\left(x_1w_1 + x_2w_2 + wo\right)
@@ -91,6 +91,21 @@ $$
 $$
  n_2 = \tanh\left(x_1w_3 + x_2w_4 + wo\right)
 $$
+
+- That is a single curvatue of the a line can fit any decision boundary
+
+## How do we train such a network of neurons:
+1. Initise the architecure (define the number of hidden layers, neurons etc)
+1. Randomly initise the weight
+1. Given the weights calculate the loss:-
+    * how do i calculate the loss of regression problem?
+        + The Mean Squared Error (MSE) is calculated using the following formula:
+            \[ MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 \]
+
+            Where:
+            - \( n \) is the number of observations,
+            - \( y_i \) is the actual value for the i-th observation,
+            - \( \hat{y}_i \) is the predicted value for the i-th observation.
 
 
 
