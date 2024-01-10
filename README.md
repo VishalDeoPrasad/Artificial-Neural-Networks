@@ -42,15 +42,19 @@
 ### Why the non-linearlity is absolutely vital?
 
 <p align="center">
-  <img src="https://learnopencv.com/wp-content/uploads/2017/10/mlp-diagram.jpg" alt="Logo" style="width: 50%;">
+  <img src="https://learnopencv.com/wp-content/uploads/2017/10/mlp-diagram.jpg" alt="Logo" style="width: 80%;">
 </p>
 
 $$
- n_1 = x1w1+x2w2+wo 
+ n_1 = x_1w_1 + x_2w_2+wo 
 $$
 
 $$
- n_2 = x1w3+x2w4+wo
+ n_2 = x_1w_3 + x_2w_4+wo
+$$
+
+$$
+ y^{\wedge} = w_5n_1 + w_6n_2+wb
 $$
 
 
