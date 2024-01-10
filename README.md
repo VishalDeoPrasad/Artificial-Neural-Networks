@@ -54,10 +54,15 @@ $$
 $$
 
 $$
+    w_1, w_2, w_3, w_4 --> these thing decide my slope, and when it pass to the non-linearity it will decide my curvature
+$$
+
+$$
  y^{ \wedge } = w_5n_1 + w_6n_2 + wb
 $$
 
-- if we add any kind of non linearity then the megic will happen
+- if we add any kind of non linearity then the megic will happen.
+- this is the beauti, i neuron doing the simple task but when you join simple, simple, ... task to data i will become big and solve bigger problem.
 
 $$
  n_1 = \tanh\left(x_1w_1 + x_2w_2 + wo\right)
@@ -67,9 +72,7 @@ $$
  n_2 = \tanh\left(x_1w_3 + x_2w_4 + wo\right)
 $$
 
-$$
-\style{padding: 10px}{\tanh\left( n^{\wedge} \right) = \tanh\left( x_1w_1 + x_2w_2 + w_0 \right)}
-$$
+
 
 
 
