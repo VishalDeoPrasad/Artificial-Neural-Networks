@@ -41,7 +41,9 @@
 
 ### Why the non-linearlity is absolutely vital?
 
-<img src="https://learnopencv.com/wp-content/uploads/2017/10/mlp-diagram.jpg" alt="Logo" style="width: 80%;">
+<p align="center">
+  <img src="https://learnopencv.com/wp-content/uploads/2017/10/mlp-diagram.jpg" alt="Logo" style="width: 50%;">
+</p>
 
 $$
  n1 = x1w1+x2w2+wo 
