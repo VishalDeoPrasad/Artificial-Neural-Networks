@@ -44,7 +44,8 @@
 <img src="https://learnopencv.com/wp-content/uploads/2017/10/mlp-diagram.jpg" alt="Logo" style="width: 80%;">
 
 $$
-\int_{a}^{b} f(x) \,dx = F(b) - F(a)
+ n1 = x1w1+x2w2+wo
+ n2 = x1w3+x2w4+wo
 $$
 
 
