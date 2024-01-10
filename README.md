@@ -57,4 +57,14 @@ $$
  y^{ \wedge } = w_5n_1 + w_6n_2 + wb
 $$
 
+- if we add any kind of non linearity then the megic will happen
+
+$$
+ n_1 = \tanh\left(x_1w_1 + x_2w_2 + wo\right)
+$$
+
+$$
+ n_2 = \tanh\left(x_1w_3 + x_2w_4 + wo\right)
+$$
+
 
