@@ -65,6 +65,19 @@ $$
  y^{ \wedge } = w_5(x_1w_1 + x_2w_2 + wo) + w_6(x_1w_3 + x_2w_4 + wo) + wb
 $$
 
+$$
+ y^{ \wedge } = w_5x_1w_1 + w_5x_2w_2 + w_5wo + w_6x_1w_3 + w_6x_2w_4 + w_6wo + wb
+$$
+- collect all the x1, x2, wb
+$$
+ y^{ \wedge } = x_1(w_5w_1 + w_6w_3) + x_2(w_5w_2 + w_6w_4) + w_5wo  + w_6wo + wb
+$$
+
+it's a line:
+$$
+ y^{ \wedge } = x_1A + x_2B + C
+$$
+
 - if we add any kind of non linearity then the megic will happen.
 - this is the beauti, i neuron doing the simple task but when you join simple, simple, ... task to data i will become big and solve bigger problem.
 
