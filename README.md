@@ -46,15 +46,15 @@
 </p>
 
 $$
- n_1 = x_1w_1 + x_2w_2+wo 
+ n_1 = x_1w_1 + x_2w_2 + wo 
 $$
 
 $$
- n_2 = x_1w_3 + x_2w_4+wo
+ n_2 = x_1w_3 + x_2w_4 + wo
 $$
 
 $$
- y^{\wedge} = w_5n_1 + w_6n_2+wb
+ y^{ \wedge } = w_5n_1 + w_6n_2 + wb
 $$
 
 
