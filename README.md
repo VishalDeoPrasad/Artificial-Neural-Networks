@@ -101,14 +101,12 @@ $$
     * how do i calculate the loss of regression problem?
         + The Mean Squared Error (MSE) is calculated using the following formula:
             
-            $$
-            \[ MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 \]
-            $$
-
+            The Mean Squared Error (MSE) is calculated using the formula:
+            MSE = (1/n) * Σ(yᵢ - ŷᵢ)²
             Where:
-            - $$ \( n \) $$ is the number of observations,
-            - $$ \( y_i \) $$ is the actual value for the i-th observation,
-            - $$ \( \hat{y}_i \) $$ is the predicted value for the i-th observation.
+            - n is the number of observations,
+            - yᵢ is the actual value for the i-th observation,
+            - ŷᵢ is the predicted value for the i-th observation.
 
 
 
