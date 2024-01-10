@@ -67,4 +67,9 @@ $$
  n_2 = \tanh\left(x_1w_3 + x_2w_4 + wo\right)
 $$
 
+$$
+\style{padding: 10px}{\tanh\left( n^{\wedge} \right) = \tanh\left( x_1w_1 + x_2w_2 + w_0 \right)}
+$$
+
+
 
