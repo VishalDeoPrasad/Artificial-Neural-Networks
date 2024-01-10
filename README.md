@@ -73,7 +73,7 @@ $$
  y^{ \wedge } = x_1(w_5w_1 + w_6w_3) + x_2(w_5w_2 + w_6w_4) + w_5wo  + w_6wo + wb
 $$
 
-it's a line:
+- it's a line:
 $$
  y^{ \wedge } = x_1A + x_2B + C
 $$
