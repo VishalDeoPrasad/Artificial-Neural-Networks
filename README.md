@@ -46,11 +46,11 @@
 </p>
 
 $$
- n1 = x1w1+x2w2+wo 
+ n_1 = x1w1+x2w2+wo 
 $$
 
 $$
- n2 = x1w3+x2w4+wo
+ n_2 = x1w3+x2w4+wo
 $$
 
 
