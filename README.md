@@ -43,3 +43,5 @@
 
 ### How Neuron looks like?
 ![Alt text](https://learnopencv.com/wp-content/uploads/2017/10/mlp-diagram.jpg)
+
+<img src="https://example.com/images/logo.png" alt="Logo" width="300" height="200">
