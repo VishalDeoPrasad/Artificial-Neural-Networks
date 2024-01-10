@@ -98,15 +98,13 @@ $$
 1. Initise the architecure (define the number of hidden layers, neurons etc)
 1. Randomly initise the weight
 1. Given the weights calculate the loss:-
-    * how do i calculate the loss of regression problem?
-        + The Mean Squared Error (MSE) is calculated using the following formula:
-            
-            The Mean Squared Error (MSE) is calculated using the formula:
-            MSE = (1/n) * Σ(yᵢ - ŷᵢ)²
-            Where:
-            - n is the number of observations,
-            - yᵢ is the actual value for the i-th observation,
-            - ŷᵢ is the predicted value for the i-th observation.
+    * how do i calculate the loss of regression problem?  
+        The Mean Squared Error (MSE) is calculated using the formula: <br>
+        MSE = (1/n) * Σ(yᵢ - ŷᵢ)²
+        Where:
+        - n is the number of observations,
+        - yᵢ is the actual value for the i-th observation,
+        - ŷᵢ is the predicted value for the i-th observation.
 
 
 
