@@ -45,3 +45,6 @@
 ![Alt text](https://learnopencv.com/wp-content/uploads/2017/10/mlp-diagram.jpg)
 
 <img src="https://learnopencv.com/wp-content/uploads/2017/10/mlp-diagram.jpg" alt="Logo" width="300" height="200">
+
+<img src="https://learnopencv.com/wp-content/uploads/2017/10/mlp-diagram.jpg" alt="Logo" style="width: 50%;">
+
