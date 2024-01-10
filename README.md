@@ -41,10 +41,10 @@
 
 ### Why the non-linearlity is absolutely vital?
 
-### How Neuron looks like?
-![Alt text](https://learnopencv.com/wp-content/uploads/2017/10/mlp-diagram.jpg)
+<img src="https://learnopencv.com/wp-content/uploads/2017/10/mlp-diagram.jpg" alt="Logo" style="width: 80%;">
 
-<img src="https://learnopencv.com/wp-content/uploads/2017/10/mlp-diagram.jpg" alt="Logo" width="300" height="200">
+$$
+\int_{a}^{b} f(x) \,dx = F(b) - F(a)
+$$
 
-<img src="https://learnopencv.com/wp-content/uploads/2017/10/mlp-diagram.jpg" alt="Logo" style="width: 50%;">
 
