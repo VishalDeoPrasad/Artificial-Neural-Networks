@@ -7,8 +7,8 @@
 - In Machine Learning need data in feature space such as x1, x2, x3... 
 - Where as Deep Learning No need of Featurization.
 - Deep Learning can Extract the feature from Image, Text, Tabula data, Audio, Video, etc. it automatically extract information.
-- **New Definition:** Deep Learning is basically a mathematical techinique that enable us to extract infromation from any kind of structured/unstructured data using the concept of neuron.
-- $ Y = f(x) $ This data(x) can be Tabular/graph/video/Audio/Text/Image etc; we can give any kind of data and we can do any kind of prediction. the only kind we need to understand which architure of f or which deep learning techinique we should use in this case, this is the power of Deep Learning.
+> **New Definition:** Deep Learning is basically a mathematical techinique that enable us to extract infromation from any kind of structured/unstructured data using the concept of neuron.
+- $$ Y = f(x) $$ This data(x) can be Tabular/graph/video/Audio/Text/Image etc; we can give any kind of data and we can do any kind of prediction. the only kind we need to understand which architure of f or which deep learning techinique we should use in this case, this is the power of Deep Learning.
 - if we design is arthitecure of f in proper manner, we can solve any kind of problem.
 
 - Q. You are saying that data can be anything, but you also saying that function the deep learning algorithm should be articureize according to the data, can you tell what type of data vs what type of archtecure works.
@@ -95,8 +95,8 @@ $$
 - That is a single curvatue of the a line can fit any decision boundary
 
 ## How do we train such a network of neurons:
-1. Initise the architecure (define the number of hidden layers, neurons etc)
-1. Randomly initise the weight
+1. Intilise the architecure (define the number of hidden layers, neurons etc)
+1. Randomly Intilise the weight
 1. Given the weights calculate the loss:-
     * how do i calculate the loss of regression problem? 
         MSE = (1/n) * Σ(yᵢ - ŷᵢ)²
@@ -106,6 +106,9 @@ $$
         - ŷᵢ is the predicted value for the i-th observation.
 1. Given the loss, update the weithts- Gradient Descent Algorithm + Chain Rule
 1. using the updated weights go to step3 and keep on doing it till you stablise your training loss to the min possible(min val loss)
+
+# Gradient Descent Algothim and Chain Rule
+- Gradient will have some problems and that where we will be learning optimizers; it is meant to improve the gradient descent problem.
 
 
 
