@@ -8,7 +8,10 @@
 - Where as Deep Learning No need of Featurization.
 - Deep Learning can Extract the feature from Image, Text, Tabula data, Audio, Video, etc. it automatically extract information.
 > **New Definition:** Deep Learning is basically a mathematical techinique that enable us to extract infromation from any kind of structured/unstructured data using the concept of neuron.
-- $$ Y = f(x) $$ This data(x) can be Tabular/graph/video/Audio/Text/Image etc; we can give any kind of data and we can do any kind of prediction. the only kind we need to understand which architure of f or which deep learning techinique we should use in this case, this is the power of Deep Learning.
+
+- $$ Y = f(x) $$ 
+    
+    This data(x) can be Tabular/graph/video/Audio/Text/Image etc; we can give any kind of data and we can do any kind of prediction. the only kind we need to understand which architure of f or which deep learning techinique we should use in this case, this is the power of Deep Learning.
 - if we design is arthitecure of f in proper manner, we can solve any kind of problem.
 
 - Q. You are saying that data can be anything, but you also saying that function the deep learning algorithm should be articureize according to the data, can you tell what type of data vs what type of archtecure works.
@@ -109,6 +112,115 @@ $$
 
 # Gradient Descent Algothim and Chain Rule
 - Gradient will have some problems and that where we will be learning optimizers; it is meant to improve the gradient descent problem.
+
+
+## what is the job of single Neuron?
+> Neuron get some input along with the weights and bias and generate some output.
+
+## what exactly a neural network?
+- Neural network a basically a concept where in we are connecting multiple small small mathematic unit together in such a way they can fit any kind of decision boundry. 
+- the way it is doing, the one neuron is resposible for small single job.
+- one neuron is doing a very simple job.
+- the objective of one neuron in life is, that i certain inputs comming inside me and i give them certain weight, i combine inputs with weights and bias to generate some output.
+- y = x1xW1 + x2xW2 + w0 
+- neuron is resposible for decision boundary
+- you need to design a framework that i can form any kind of non-linearity, given any kind of function i can fit that or any kind of dimension.
+- this can acheive be only acheive by 2 things, one is that if i divide the entire boundary in small small subsegments and each subsegment is single non-linearity then at a network i can fit a complex decision boundary.
+
+### why the non-linerity is absolutely vital?
+- it is difficult for me to estimate the boundary in totality, but it is easier for me to estimate in joing diffent differnt curve.
+
+### Question: I understood that we have some input varible which multiply by some weights and again in hidden layer it again multiply by some weights and product some output. How can this weight is find out?
+- it is solved by gradient descent
+
+## How do we train such a network of neurons?
+ 1. Initalise the architecure(define the number of hidden layers, neurons etc)
+ 1. Randomly initialise the weights
+ 1. Given the weights calculate the loss
+ 1. Given the loss, update the weights- Gradient descent Algorithm + Chain Rule
+ 1. using the updated weights go to step 3 and keep on doing it till you stabilise your training loss to the min possible(min val loss)
+
+(One *Forword Propagation*: given random weight we forward propagates, and get the loss. calculate from left to right)
+
+
+## what is loss?
+- Loss is a function that define the difference between the actural and predicted.
+- basic properties of loss function-
+    + should be continues
+    + should be diffential
+    + should be exist in such a way it has only one minimum, convex optimzation(only one minimum)
+    + The Mean Squared Error (MSE) is a commonly used loss function in regression problems to measure the average squared difference between the predicted values and the actual values. This loss function is particularly useful when the goal is to minimize the average squared error of predictions.
+    + The formula for Mean Squared Error is given by:
+
+        \[ MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 \]
+
+        where:
+        - \( n \) is the number of samples.
+        - \( y_i \) is the actual value of the i-th sample.
+        - \( \hat{y}_i \) is the predicted value of the i-th sample.
+
+## What is the loss in binary classification
+Cross-Entropy Loss, often referred to as *Log Loss*, is a widely used loss function in classification problems. It measures the performance of a classification model whose output is a probability value between 0 and 1.
+
+#### Binary Cross-Entropy Loss Formula
+    The formula for Binary Cross-Entropy Loss is given by:
+
+    \[ BCE = -\frac{1}{N} \sum_{i=1}^{N} \left( y_i \cdot \log(\hat{y}_i) + (1 - y_i) \cdot \log(1 - \hat{y}_i) \right) \]
+
+    where:
+    - \( N \) is the number of samples.
+    - \( y_i \) is the true label of the i-th sample (1 for positive, 0 for negative).
+    - \( \hat{y}_i \) is the predicted probability of the i-th sample being in the positive class.
+
+#### Categorical Cross-Entropy Loss Formula
+    For multi-class classification, the Categorical Cross-Entropy Loss is used. The formula is given by:
+
+    \[ CCE = -\frac{1}{N} \sum_{i=1}^{N} \sum_{j=1}^{C} y_{i,j} \cdot \log(\hat{y}_{i,j}) \]
+
+    where:
+    - \( N \) is the number of samples.
+    - \( C \) is the number of classes.
+    - \( y_{i,j} \) is the indicator function (1 if sample \( i \) belongs to class \( j \), 0 otherwise).
+    - \( \hat{y}_{i,j} \) is the predicted probability of the i-th sample belonging to class \( j \).
+
+#### Interpretation
+- Cross-Entropy Loss is used to measure the dissimilarity between the true distribution and the predicted distribution.
+- Lower Cross-Entropy Loss values indicate better model performance.
+
+#### Considerations
+- Cross-Entropy Loss is sensitive to the correctness of class probabilities predicted by the model.
+- It penalizes confidently wrong predictions more than uncertain ones.
+
+### forward propagation and backword propagation
++ given the weight calculate the loss, is called forward propagation
++ given the loss update the weight, is called backward propagation
+
+### How to update the weight, is there any logic behind how to update the weight or any algorithm is there to update the weights. 
+- There is an algorithm that is called Gradient Descent Algorithm
+
+## Grandient Descent Algorithm
++ given the loss how do i update the weight for regression problem, for classification problem and for multiclass classification problem.
++ Loss is the function which are present in multi-dimenstion; how many dimention; number of weights and bias
++ starts with random weights
+![Alt text](image.png)
++ so from here, we calculate the partical derivties of loss with respect to w1
+    - what is partical derivates; if the increse our w1 slightly, w1+dw, what will happen to my loss.
+    - DL/w1: optimize in the direction of w1
+    1. in case of regression problem - [output: acivation] [function, LOSS: MSE]
+    1. in case of classification problem(binary) - [output: sigmoid], [LOSS: binary Log Loss]
+    1. in case of Multi-classification problem - [output: softmax], [LOSS: multiclass logloss]
+        * One-vs-Rest - if you have 3 class in you neuron then there is 3 output, each output contain the probabilty of output.
+        * but how do i make sure each of the three neuron are between 0 to 1 and all of them together add up to 1.
+        * through an activation function called Softmax
+        * softmax takes any value of n, not that only it return the probabilty of each output(between 0 to 1) and total add up to 1.
+        ![Alt text](image-1.png)
+    * use one-hot-encoding not label-encoding for multiclass classification.
+
+### why can't we use metrices for updating the loss?
+ - Metrices are use for majoring the performance, we can not find the loss.
+ - also it is not differentiable
+
+
 
 
 
