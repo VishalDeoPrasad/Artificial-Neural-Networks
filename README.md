@@ -220,6 +220,7 @@ Cross-Entropy Loss, often referred to as *Log Loss*, is a widely used loss funct
  - Metrices are use for majoring the performance, we can not find the loss.
  - also it is not differentiable
 
+## TensorFlow and keras
 
 
 
