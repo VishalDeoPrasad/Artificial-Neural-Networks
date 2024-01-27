@@ -221,7 +221,28 @@ Cross-Entropy Loss, often referred to as *Log Loss*, is a widely used loss funct
  - also it is not differentiable
 
 ## TensorFlow and keras
+    - tool and platform that i can use my neural network at simpler way.
 
+### The loss curve that we get in neural network can be very very difficult to optimize, what are the tool and technique in our pocket to make my neural network better in training.
+    - Dropout,
+    - Batch Normalization
+    - Regulization
+    - optimzer
+    - callback
+    - hyperparamerter Tunning
+> these are my mathematical animation so that we can create our neural network in more refine way.
+
+### what is TensorFlow?
+> Tensorflow is basically a neural network package which is design to build a neural network. but it has some learning curve
+> Keras comes and say, I can create an API which is basically raper over tensorflow and the user is esserly be interacting with keras API, it is design in such a way that a user have very small or shello learning curve.
+> In keras 3.0, keras also build a raper over pytorch, which makes even easy.
+
+### log loss and class weight
+  + if small loss in minority class it will increase, loss for miniority class will be height because of giving class weight.
+![Alt text](image-2.png)
+
+### Relu vs Leaky Relu
+![Alt text](image-3.png)
 
 
 
