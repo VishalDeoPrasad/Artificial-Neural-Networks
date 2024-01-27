@@ -425,10 +425,10 @@ for i, layer in enumerate(weight_layers):
 > Lets look at the history object dictionary. It's an alternative to dir().
 `__dict__` attribute can be used to retrieve all the keys associated with the object on which it is called.
 
->> history.__dict__.keys()
+>history.__dict__.keys()
 dict_keys(['validation_data', 'model', '_chief_worker_only', '_supports_tf_logs', 'history', 'params', 'epoch'])
 
->> history.history.keys()
+>history.history.keys()
 dict_keys(['loss', 'accuracy', 'val_loss', 'val_accuracy'])
 
 ```python
@@ -460,6 +460,6 @@ plt.show()
 
 ### Log Loss(Categorical Cross Entropy) vs Sparse Categorical Cross Entropy
 
-y^ = [0.2 0.7 0.1]    y = [1 0 0] --> One hot Encoding
-y^ = [0.2 0.7 0.1]    y = 1       --> Categorical
++ y^ = [0.2 0.7 0.1]    y = [1 0 0] --> One hot Encoding
++ y^ = [0.2 0.7 0.1]    y = 1       --> Categorical
 
