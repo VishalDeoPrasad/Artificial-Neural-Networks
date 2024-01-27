@@ -237,13 +237,6 @@ Cross-Entropy Loss, often referred to as *Log Loss*, is a widely used loss funct
 > Keras comes and say, I can create an API which is basically raper over tensorflow and the user is esserly be interacting with keras API, it is design in such a way that a user have very small or shello learning curve.
 > In keras 3.0, keras also build a raper over pytorch, which makes even easy.
 
-### log loss and class weight
-  + if small loss in minority class it will increase, loss for miniority class will be height because of giving class weight.
-![Alt text](image-2.png)
-
-### Relu vs Leaky Relu
-![Alt text](image-3.png)
-
 ### Different layers we have: 
 > Layer is basically transformation of the incomming data
 1. __Core Layers__
@@ -295,11 +288,11 @@ model = Sequential()
 # relu and tanh both we can use but when to use what we don't know, it is hyperparamerter tunning
 
 #input layer
-model.add(Dense(units=10, activation='relu', input_shape=(x.shape[1],)))
+model.add(Dense(units=10, activation='relu', input_shape=(x.shape[1],), name='hidden_1'))
 #hidden layer
-model.add(Dense(units=5, activation='tanh')) #no need to give input shape; since it is sequential it know input is comming from previous layer
+model.add(Dense(units=5, activation='tanh'), name='hidden_2') #no need to give input shape; since it is sequential it know input is comming from previous layer
 #output layer
-model.add(Dense(units=1, activation='linear')) #units is depends upon type of problem we are solving, here i am solving regression problem so unit will be 1
+model.add(Dense(units=1, activation='linear'), name='Output') #units is depends upon type of problem we are solving, here i am solving regression problem so unit will be 1
 #activation is linear; it is also know as pass-through; it return input unmodified
 #by default is activation='linear'
 
@@ -336,6 +329,137 @@ model.fit(X,y, epochs=100, validation_data=0.2)
 #after every iteration i will use the weight to calculate and predict the value, and use the validation to check and verify how closer or far we are
 #after every epochs, you will be able to monitor the training loss 
 ```
+### log loss and class weight
+  + if small loss in minority class it will increase, loss for miniority class will be height because of giving class weight.
+![Alt text](image-2.png)
+
+### Relu vs Leaky Relu
+![Alt text](image-3.png)
+
+### Train Test Split
+
+```python
+from sklearn.model_selection import train_test_split
+
+X_dev, X_test, y_dev, y_test = train_test_split(X, y, test_size=0.1, random_state=42)
+X_train, X_val, y_train, y_val = train_test_split(X_dev, y_dev, test_size=0.1, random_state=42)
+
+print('train :', X_train.shape, y_train.shape)
+print('test  :', X_test.shape, y_test.shape)
+print('val   :', X_val.shape, y_val.shape)
+```
+
+### Standard Scaler
+  Q. why do we split first and then scale, why can we scale and then split.
+  + let's say we scaler entire data, and then we perform the split, in this case the mean and Standard deviation of data get known by test and validate data, which is not good.
+  + best practice: first we need to split and then scaler the value.
+  + to prevent it from data leaking, because of mean value of training data
+  Q. Why do we need scale on x and do we need scaling on y?
+  + it will make everything unit less
+  + Now, in the case of classification problem we don't need to perform scaling but in the regression problem do we need to scale the y.
+  + if you y is very high then there is not problem in scaling. example: house pricing, car prices, or millions
+  + sometime it will give out of memory error if your value is very high, then you loss will be huge.
+
+```python
+from sklearn.preprocessing import StandardScaler
+scaler = StandardScaler
+X_train = scaler.fit_transform(X_train)
+X_test = scaler.transfrom(X_test)
+X_val = scaler.transfrom(X_val)
+```   
+
+### Simple Model
+```python
+model = Sequential([
+                    Dense(64, activation="relu", input_shape=(11,), name="hidden_1"),
+                    Dense(4, activation="softmax", name="output")
+])
+model.summary()
+```
+
+### Model: "sequential_4"
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ hidden_1 (Dense)            (None, 64)                768       
+                                                                 
+ output (Dense)              (None, 4)                 260       
+                                                                 
+=================================================================
+Total params: 1028 (4.02 KB)
+Trainable params: 1028 (4.02 KB)
+Non-trainable params: 0 (0.00 Byte)
+_________________________________________________________________
+
+### Model Summary
+from tensorflow.keras.utils import plot_model
+
+plot_model(model,
+    to_file='model.png',
+    show_shapes=True, show_layer_names=True)
+    ![Alt text](image-4.png)
+
+> forward propegation, calculate the loss
+> backard propegation, update the weights
+
+### Fit model
+```python
+%%time
+history = model.fit(X_train, y_train, epochs=500, batch_size=256, validation_split=0.1, verbose=1)
+
+# Plot histograms of weight and bias values after training
+import matplotlib.pyplot as plt
+fig, axes = plt.subplots(3, 2, figsize=(5,5))
+fig.subplots_adjust(hspace=0.5, wspace=0.5)
+
+# get the weights from the layers
+weight_layers = [layer for layer in model.layers]
+
+for i, layer in enumerate(weight_layers):
+    for j in [0, 1]:
+        axes[i, j].hist(layer.weights[j].numpy().flatten(), align='left')
+        axes[i, j].set_title(layer.weights[j].name)
+```
+![Alt text](image-5.png)
+
+> Lets look at the history object dictionary. It's an alternative to dir().
+`__dict__` attribute can be used to retrieve all the keys associated with the object on which it is called.
+
+>> history.__dict__.keys()
+dict_keys(['validation_data', 'model', '_chief_worker_only', '_supports_tf_logs', 'history', 'params', 'epoch'])
+
+>> history.history.keys()
+dict_keys(['loss', 'accuracy', 'val_loss', 'val_accuracy'])
+
+```python
+epochs = history.epoch
+loss = history.history["loss"]
+accuracy = history.history["accuracy"]
+val_loss = history.history["val_loss"]
+val_accuracy = history.history["val_accuracy"]
+
+plt.figure()
+plt.plot(epochs, loss, label="train")
+plt.plot(epochs, val_loss, label="val")
+plt.legend()
+plt.title("Loss VS Epochs")
+plt.show()
+
+plt.figure()
+plt.plot(epochs, accuracy, label="train")
+plt.plot(epochs, val_accuracy, label="validation")
+plt.legend()
+plt.title("Accuracy VS Epochs")
+plt.show()
+```
 
 
+
+
+
+
+### Log Loss(Categorical Cross Entropy) vs Sparse Categorical Cross Entropy
+
+y^ = [0.2 0.7 0.1]    y = [1 0 0] --> One hot Encoding
+y^ = [0.2 0.7 0.1]    y = 1       --> Categorical
 
