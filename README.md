@@ -244,7 +244,51 @@ Cross-Entropy Loss, often referred to as *Log Loss*, is a widely used loss funct
 ### Relu vs Leaky Relu
 ![Alt text](image-3.png)
 
+### Different layers we have: 
+> Layer is basically transformation of the incomming data
+1. __Core Layers__
+    1. input layer
+    1. Dense Layer
+    1. Activation Layer
+    1. Embedding Layer
+    1. Masking Layer
+    1. Lambda Layer
+1. __Convolution Layers__
+1. __Pooling Layers__   : used in images
+1. __Recurrent Layers__ : used in nlp
+1. __Preprocessing  Layers__
+1. __Normalization  Layers__
+1. __Regularization  Layers__
+1. __Attention  Layers__ : Transformer model
+1. __Reshaping  Layers__
+1. __Activation  Layers__
 
+### Denser Layer
+```python
+keras.layers.Dense(
+    units,
+    activation=None,
+    use_bias=True,
+    kernel_initializer="glorot_uniform",
+    bias_initializer="zeros",
+    kernel_regularizer=None,
+    bias_regularizer=None,
+    activity_regularizer=None,
+    kernel_constraint=None,
+    bias_constraint=None,
+    **kwargs
+)
+```
+ 
+```python
+import tensorflow
+import keras
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+
+> create an instance of sequential class; this is like a list now we need to add our layer,
+model = Sequential()
+```
 
 
 
