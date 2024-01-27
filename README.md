@@ -286,8 +286,55 @@ import keras
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
-> create an instance of sequential class; this is like a list now we need to add our layer,
+# create an instance of sequential class; this is like a list now we need to add our layer,
 model = Sequential()
+
+# we added our hidden layer, the name of the hidden layer that keras identify is dense
+# requirement of first Dense Layer, no of neuron, activation
+# x.shape[1]- gives not of features we have
+# relu and tanh both we can use but when to use what we don't know, it is hyperparamerter tunning
+
+#input layer
+model.add(Dense(units=10, activation='relu', input_shape=(x.shape[1],)))
+#hidden layer
+model.add(Dense(units=5, activation='tanh')) #no need to give input shape; since it is sequential it know input is comming from previous layer
+#output layer
+model.add(Dense(units=1, activation='linear')) #units is depends upon type of problem we are solving, here i am solving regression problem so unit will be 1
+#activation is linear; it is also know as pass-through; it return input unmodified
+#by default is activation='linear'
+
+```
+
+### Optimizer
+```python
+sgd = keras.optimizers.SGD(
+    learning_rate=0.01,
+    momentum=0.0,
+    nesterov=False,
+    weight_decay=None,
+    clipnorm=None,
+    clipvalue=None,
+    global_clipnorm=None,
+    use_ema=False,
+    ema_momentum=0.99,
+    ema_overwrite_frequency=None,
+    name="SGD",
+    **kwargs
+)
+```
+### compile function
+```python
+# in the compilation code we have to make 3 important aspects;
+#loss, optimzer(gradient descent), metrics
+model.compile(loss='mean_squared_error', optimizer=sgd, metrics=['r2', 'mae'])
+#We can use loss as a metric but visa versa is not possible
+```
+
+### fit function
+```python
+model.fit(X,y, epochs=100, validation_data=0.2)
+#after every iteration i will use the weight to calculate and predict the value, and use the validation to check and verify how closer or far we are
+#after every epochs, you will be able to monitor the training loss 
 ```
 
 
