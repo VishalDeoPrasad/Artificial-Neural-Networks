@@ -407,6 +407,12 @@ plot_model(model,
 %%time
 history = model.fit(X_train, y_train, epochs=500, batch_size=256, validation_split=0.1, verbose=1)
 
+#return the probability of 4 class
+pred = model.predict(X_val)
+
+#find the actural class
+np.argmax(pred)
+
 # Plot histograms of weight and bias values after training
 import matplotlib.pyplot as plt
 fig, axes = plt.subplots(3, 2, figsize=(5,5))
