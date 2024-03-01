@@ -152,37 +152,35 @@ $$
     + The Mean Squared Error (MSE) is a commonly used loss function in regression problems to measure the average squared difference between the predicted values and the actual values. This loss function is particularly useful when the goal is to minimize the average squared error of predictions.
     + The formula for Mean Squared Error is given by:
 
-        \[ \text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 \]
-
-
-        where:
-        - \( n \) is the number of samples.
-        - \( y_i \) is the actual value of the i-th sample.
-        - \( \hat{y}_i \) is the predicted value of the i-th sample.
+        ![alt text](image-6.png)
+        
 
 ## What is the loss in binary classification
 Cross-Entropy Loss, often referred to as *Log Loss*, is a widely used loss function in classification problems. It measures the performance of a classification model whose output is a probability value between 0 and 1.
 
-#### Binary Cross-Entropy Loss Formula
-    The formula for Binary Cross-Entropy Loss is given by:
+### Binary Cross-Entropy Loss Formula
 
-    \[ BCE = -\frac{1}{N} \sum_{i=1}^{N} \left( y_i \cdot \log(\hat{y}_i) + (1 - y_i) \cdot \log(1 - \hat{y}_i) \right) \]
+The formula for Binary Cross-Entropy Loss is given by:
 
-    where:
-    - \( N \) is the number of samples.
-    - \( y_i \) is the true label of the i-th sample (1 for positive, 0 for negative).
-    - \( \hat{y}_i \) is the predicted probability of the i-th sample being in the positive class.
+![alt text](image-7.png)
 
-#### Categorical Cross-Entropy Loss Formula
-    For multi-class classification, the Categorical Cross-Entropy Loss is used. The formula is given by:
+where:
 
-    \[ CCE = -\frac{1}{N} \sum_{i=1}^{N} \sum_{j=1}^{C} y_{i,j} \cdot \log(\hat{y}_{i,j}) \]
+- \( N \) is the number of samples.
+- \( y_i \) is the true label of the i-th sample (1 for positive, 0 for negative).
+- \( \hat{y}_i \) is the predicted probability of the i-th sample being in the positive class.
 
-    where:
-    - \( N \) is the number of samples.
-    - \( C \) is the number of classes.
-    - \( y_{i,j} \) is the indicator function (1 if sample \( i \) belongs to class \( j \), 0 otherwise).
-    - \( \hat{y}_{i,j} \) is the predicted probability of the i-th sample belonging to class \( j \).
+
+### Categorical Cross-Entropy Loss Formula
+For multi-class classification, the Categorical Cross-Entropy Loss is used. The formula is given by:
+
+![alt text](image-8.png)
+
+where:
+- \( N \) is the number of samples.
+- \( C \) is the number of classes.
+- \( y_{i,j} \) is the indicator function (1 if sample \( i \) belongs to class \( j \), 0 otherwise).
+- \( \hat{y}_{i,j} \) is the predicted probability of the i-th sample belonging to class \( j \).
 
 #### Interpretation
 - Cross-Entropy Loss is used to measure the dissimilarity between the true distribution and the predicted distribution.
