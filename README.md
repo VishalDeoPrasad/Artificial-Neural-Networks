@@ -324,6 +324,7 @@ model.add(Dense(units=1, activation='linear'), name='Output') #units is depends 
 ```
 
 ### Optimizer
+An optimizer in the context of neural networks and machine learning is an algorithm used to minimize the loss function by adjusting the parameters (weights and biases) of the model during training. It determines how the model learns by updating these parameters in order to improve its performance over time. Common optimizers include stochastic gradient descent (SGD), Adam, RMSprop, and Adagrad, each with its own characteristics and advantages depending on the nature of the problem being solved.
 ```python
 sgd = keras.optimizers.SGD(
     learning_rate=0.01,
