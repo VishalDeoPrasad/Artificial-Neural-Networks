@@ -205,7 +205,7 @@ where:
 + so from here, we calculate the partical derivties of loss with respect to w1
     - what is partical derivates; if the increse our w1 slightly, w1+dw, what will happen to my loss.
     - DL/w1: optimize in the direction of w1
-    1. in case of regression problem - [output: acivation] [function, LOSS: MSE]
+    1. in case of regression problem - [output: linear acivation function], [LOSS: MSE]
     1. in case of classification problem(binary) - [output: sigmoid], [LOSS: binary Log Loss]
     1. in case of Multi-classification problem - [output: softmax], [LOSS: multiclass logloss]
         * One-vs-Rest - if you have 3 class in you neuron then there is 3 output, each output contain the probabilty of output.
@@ -214,6 +214,31 @@ where:
         * softmax takes any value of n, not that only it return the probabilty of each output(between 0 to 1) and total add up to 1.
         ![Alt text](image-1.png)
     * use one-hot-encoding not label-encoding for multiclass classification.
+
+# Activation Functions for Different Types of Problems
+## Activation Function
+An activation function is a mathematical operation applied to each neuron's output in a neural network, introducing non-linearity to the model. It allows the network to learn complex patterns and relationships in the data by transforming the input signals into an output signal. Activation functions help in capturing and representing the hierarchical structures in the data, making neural networks capable of approximating complex functions and solving a wide range of problems.
+
+## Regression Problems
+- **Linear Activation Function**: Suitable for unbounded output.
+- **ReLU (Rectified Linear Unit)**: Commonly used, but may not be suitable for negative predictions.
+- **Leaky ReLU**: Variant of ReLU that allows a small gradient for negative inputs.
+- **ELU (Exponential Linear Unit)**: Smooth alternative to ReLU, allowing negative values.
+- **Tanh (Hyperbolic Tangent)**: Squashes output to [-1, 1], suitable for bounded outputs.
+- **Softplus**: Smooth approximation of ReLU, allowing negative values.
+- **Sigmoid**: Sometimes used when output needs to be bounded between 0 and 1.
+
+## Binary Classification Problems
+- **Sigmoid Activation Function**: Outputs a probability for the positive class.
+- **Binary Step (Threshold) Activation Function**: Less common, outputs 1 or 0 based on a threshold.
+- **Softmax**: Rarely used, but can be employed for binary classification with two output units.
+
+## Multiclass Classification Problems
+- **Softmax Activation Function**: Normalizes output into a probability distribution over multiple classes.
+- **Sigmoid Activation Function per Class**: One-vs-all strategy, multiple sigmoid functions for each class.
+- **Sparse Categorical Cross-Entropy Loss**: No activation function on output layer, combined with cross-entropy loss.
+- **Softmax with Negative Log-Likelihood Loss**: Often used in frameworks like PyTorch, softmax followed by negative log-likelihood loss.
+
 
 ### why can't we use metrices for updating the loss?
  - Metrices are use for majoring the performance, we can not find the loss.
