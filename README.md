@@ -401,6 +401,7 @@ You can make inceptionnet with this framework.
 1. __Activation  Layers__
 
 ### Denser Layer
+A dense layer, also known as a fully connected layer, is a fundamental component of a neural network where each neuron in the layer is connected to every neuron in the preceding layer. It performs a linear operation followed by a non-linear activation function, allowing the network to learn complex relationships in the data.
 ```python
 keras.layers.Dense(
     units,
@@ -443,6 +444,7 @@ model.add(Dense(units=1, activation='linear'), name='Output') #units is depends 
 ```
 
 ### Optimizer
+An optimizer in the context of neural networks and machine learning is an algorithm used to minimize the loss function by adjusting the parameters (weights and biases) of the model during training. It determines how the model learns by updating these parameters in order to improve its performance over time. Common optimizers include stochastic gradient descent (SGD), Adam, RMSprop, and Adagrad, each with its own characteristics and advantages depending on the nature of the problem being solved.
 ```python
 sgd = keras.optimizers.SGD(
     learning_rate=0.01,
@@ -460,6 +462,13 @@ sgd = keras.optimizers.SGD(
 )
 ```
 ### compile function
+This line of code is from a Python script using TensorFlow or a similar deep learning framework for model compilation. 
+
+- `loss='mean_squared_error'`: This specifies the loss function to be used during training, which measures the difference between the predicted values and the actual values. In this case, it's using mean squared error, which is commonly used for regression problems.
+
+- `optimizer=sgd`: This specifies the optimizer algorithm to be used for training the model. 'sgd' likely refers to stochastic gradient descent, a popular optimization algorithm used to minimize the loss function and update the model's parameters iteratively during training.
+
+- `metrics=['r2', 'mae']`: This specifies additional metrics to be evaluated during training and testing. 'r2' likely refers to the coefficient of determination (R^2), which measures the proportion of the variance in the dependent variable that is predictable from the independent variables. 'mae' stands for mean absolute error, another metric commonly used for regression problems, which measures the average absolute difference between the predicted and actual values.
 ```python
 # in the compilation code we have to make 3 important aspects;
 #loss, optimzer(gradient descent), metrics
