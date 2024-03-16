@@ -244,14 +244,134 @@ An activation function is a mathematical operation applied to each neuron's outp
  - Metrices are use for majoring the performance, we can not find the loss.
  - also it is not differentiable
 
-## TensorFlow and keras
+## Tensorflow and Keras - 1 (Fri, 22 Dec 2023)
     - tool and platform that i can use my neural network at simpler way.
+
+#### 1. Sequential API
+- When input data is flow from one input to one output in a stream line way.
+- one input some hidden layer and one output.
+- The __Sequential model__, which is very straightforward (a simple list of layers), but is limited to single-input, single-output stacks of layers (as the name gives away).
+- `one input mean 1 type of data like data having 10 features`
+`When we have one image data and one tabular data there we need a functional API. here sequential api will not work here.`
+
+#### 2. Functional API
+- multiple input and multiple output
+- `When we have one image data and one tabular data there we need a functional API`.
+- Medical data problem, we don't only see bio marks we also see the test result, etc.
+- basically multimodel model, input are coming in different way. that is why we need to import our input layer.
+
+#### Question: Can you design this model using Keras Sequential API ?
+- No, there is no way to pass two inputs to one layer in Sequential API
+- We use another API of Keras called as Functional API to design such complex models
+
+#### Why do we need Functional API instead of Sequential API?
+
+- Functional API gives us **more flexibility**
+- This API can handle **multiple inputs and outputs**
+- lets say we have an image and a text description as our training data
+- Or we want model to output two or more target variables
+- Ex- A weather forecast model predicting Min & Max temp at the same time
+- Sequential API wont be able to do this
+
+![alt text](image-10.png)
+Look at this complex model design, it can not be created using Sequential API but easily by Functional API
+- Multiple inputs to one layer
+- Multiple outputs of one layer
+
+- So functional api gives us more **flexibility for network architectures**
+- architectures are not always in sequential manner
+- we can have two layers in parallel  
+- It is always recommend to **use the simplest method while building networks**
+- Simple models can be easily built with Sequential API
+- But sometimes we need the flexibility
+![alt text](image-11.png)
+
+#### Sequential API
+```python
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.models import Sequential
+model_sequential = Sequential([
+                    Dense(16, activation="relu", input_shape=(11,), name="hidden_1"),
+                    Dense(8, activation="relu", name="hidden_2"),
+                    Dense(4, activation="softmax", name="output")
+])
+```
+- Earlier we have created this model using Sequential API
+- Now lets create same model using Functional API
+
+#### Functional API
+- Multiple Sources of data coming together that is way i specifically bring the input layer explicityly.
+- now, what i do with this input layer, in my input layer now, i can create the input layer sapartly.
+- In Sequential we passed input shape in the first layer
+- But Here we will be using an additional layer : **Input layer**
+- we're going to explicitly have a separate layer to represent the data input.
+- so, i can create individual input layers to ingest differnt types of data in my neural network.
+```python
+from tensorflow.keras.layers import Input
+# create an input layer with the shape of the dataframe
+inp1 = Input(shape=(11,))
+inp2=Input(shape=(5,))
+```
+### Complicated:
+- I can put tabluar data, image data and text data in one single neural network and then generate the output.
+- `Q. why can't we do seperatly, we train image data seperatly, we train text data seperatily and we do tabular data seperatly`
+- ans - And when a new patient will come i can send the x-ray, ct-scan seperatly, i can send report seperatly and i can send precription seperatelty to the model and then take the average it and generate the average probability
+### what is the Difference between ensamble model and multimodel?
+- ans - `Sudipta: the model will not learn the association between each type of input if we don't use multi model approch.` <br>
+- ans - the model will not learn the join distribution, given the blood report and the scan and the text together, we need to learn `join distribution` of 3 things not individual. <br>
+- `ensemble will not able to learn the join distribution, it will learn conditional distribution, i will learn independent distribution.`
+```
+- Next we will be creating our first two layer of the model
+- Instead of creating a list (as in Sequential)
+- We will also pass previous layer in the current layer
+- In first dense `hidden_1` we will pass `inp`
+- And in second `hidden_1` we will pass `hidden_2`
+```
+```python
+h1 = Dense(16, activation="relu", name="hidden_1")(inp1)
+h2 = Dense(4, activation="relu", name="hidden_2")(h1)
+out1 = Dense(4, activation="softmax", name="output")(h2)
+
+h3=Dense(4,activation="tanh" name="hidden_3")(inp2)
+out2=Dense(1, name="output")(h3)
+```
+![alt text](image-13.png)
+
+- Finally,  to built a model using this directed graph
+- We will use `tf.keras.models.Model`, and pass all the inputs and outputs
+```python
+from tensorflow.keras.models import Model
+model_functional = Model(inputs=[inp1,inp2], outputs=[out1,out2], name="simple_nn")
+```
+
+using the same above architecure we can apply `regression` and `classificaiton` at one go.  <br>
+- `we can stack layers in no sequential manner.` <br>
+- new it is up to you what kind of problem you can solve using this arrangement of layers.
+![alt text](image-14.png)
+
+`Q. What is facial recogntion can do? we can solve the face comparision using this method.` <br>
+what facial recongition do, it has an image1 and image2, both pass through same set of layers and generates two vectors and then calcuate the cosine similarity of these two vector and prediction of 1 and 0 
+![alt text](image-16.png)
+
+`Q. Image and tabular data, how it look like in multi-modality.`
+![alt text](image-17.png)
+
+`Q. Image data, tabular data and Text data multimodel`
+functional api is not about join 2 or more models it is about the ability to combine two information from multiple sources/layers.
+![alt text](image-19.png)
+
+`note: Sudipto, i have given you machansim/framework now you think about the combination`
+
+You can make inceptionnet with this framework.
+![alt text](image-20.png)
+
+> Note: it doesn't matter what kind of data you bring in, but last layer is alway be dense laye, weather it is ANN, CNN, or RNN. after doing any kind of feature extration on tabular,video, Audio, Graph, image or text it will always end up with 1-dimentional data, which can be handle by dense layer.
 
 ### The loss curve that we get in neural network can be very very difficult to optimize, what are the tool and technique in our pocket to make my neural network better in training.
     - Dropout,
     - Batch Normalization
     - Regulization
-    - optimzer
+    - different optimzers
     - callback
     - hyperparamerter Tunning
 > these are my mathematical animation so that we can create our neural network in more refine way.
