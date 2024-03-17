@@ -365,8 +365,134 @@ functional api is not about join 2 or more models it is about the ability to com
 You can make inceptionnet with this framework.
 ![alt text](image-20.png)
 
+`Image similarity problem`: I process the image with the same steps and generate two vectors. i can not subtract the image1 to image2 i have to learn the 1 dimentional representation of these images and then do cosine similarity. <br>
+- we can not do element wise operation on this 2 image, we need to have some 1 dimentational representation then we can perform image similarity.
+- we are using the same artichiture to create the 1-dimentational vector because if we use different articecture then we get different set of 1-d vectors, which cause problem when we do cosine similarity.
+- that is why architecure design is thoughtfull processs i can't able to make in 1 or 2 day.
+- 1-dementional vector is gold pot of that image.
+![alt text](image-21.png)
+
 > Note: it doesn't matter what kind of data you bring in, but last layer is alway be dense laye, weather it is ANN, CNN, or RNN. after doing any kind of feature extration on tabular,video, Audio, Graph, image or text it will always end up with 1-dimentional data, which can be handle by dense layer.
 
+### Build a fuctional API
+```python
+from tensorflow.keras.layers import Input
+inp1 = Input(shape=(11,))
+inp2 = Input(shape=(5,))
+
+h1 = Dense(16, activation="relu", name="hidden_1")(inp1)
+h2 = Dense(4, activation="relu", name="hidden_2")(h1)
+h3=Dense(4,activation="tanh" name="hidden_3")(inp2)
+
+# final output
+out1 = Dense(4, activation="softmax", name="output")(h2)
+out2=Dense(1, name="output")(h3)
+```
+
+- We have defined the flow of the model
+- Finally,  to built a model using this directed graph
+- We will use `tf.keras.models.Model`, and pass all the inputs and outputs
+
+```python
+from tensorflow.keras.models import Model
+model_functional = Model(inputs=[inp1,inp2], outputs=[out1,out2], name="simple_nn")
+```
+
+Let's generalize above code inside a function
+```python
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import Input
+def create_model_functional():
+    inp = Input(shape=(11,))
+
+    h1 = Dense(16, activation="relu", name="hidden_1")(inp)
+    h2 = Dense(8 , activation="relu", name="hidden_2")(h1)
+
+    out = Dense(4, activation="softmax", name="output")(h2)
+
+    model = Model(inputs=inp, outputs=out, name="simple_nn")
+    return model
+```
+```python
+model_functional = create_model_functional()
+```
+```python
+model_functional.summary()
+```
+
+And, optionally, display the input and output shapes of each layer in the plotted graph:
+
+```python
+tf.keras.utils.plot_model(model_functional,show_shapes=True)
+```
+### let's create a little complex model using functional API's with more than one output
+optimizer will be same because we can not have more then 1 gradient descent to adjust the weights.
+```python
+def create_model_multiple_output():
+  inp = Input(shape=(11,))
+
+  h1 = Dense(16, activation="relu", name="hidden_1")(inp)
+  h2 = Dense(8 , activation="relu", name="hidden_2")(h1)
+  h3 = Dense(4 , activation="relu", name="hidden_3")(h2)
+
+  out1 = Dense(1, activation="sigmoid", name="output1")(h3)
+  out2 = Dense(1, activation="linear", name="output2")(h3)
+
+  model = Model(inputs=inp, outputs=[out1,out2], name="simple_nn")
+  return model
+
+# instade of string identifier i can also provide class object
+mse=tk.keras.loss.mean_squared_error()
+
+# creating model with multiple output
+model_multiple_output = create_model_multiple_output()
+model_multiple_output.compile(
+    optimizer = tf.keras.optimizers.Adam(learning_rate=0.001),
+    loss = {"output1":"binarycross_entropy", "output2":mse}, #string identifier, class object
+    metrics=["accuracy"])
+
+# plotting model with multiple output
+tf.keras.utils.plot_model(model_multiple_output,show_shapes=True)
+```
+
+#### You can make a model with multiple output with
+1. the Functional API
+1. by subclassing tf.keras.Model.
+
+Here's an example of dual outputs (regression and classification) on the Iris Dataset, using the Functional API:
+```python
+from sklearn.datasets import load_iris
+from tensorflow.keras.layers import Dense
+from tensorflow.keras import Input, Model
+import tensorflow as tf
+
+data, target = load_iris(return_X_y=True)
+X = data[:, (0, 1, 2)]
+Y = data[:, 3]
+Z = target
+
+inputs = Input(shape=(3,), name='input')
+x = Dense(16, activation='relu', name='16')(inputs)
+x = Dense(32, activation='relu', name='32')(x)
+
+# bifercate, 1 dense for regression and 1 dense for classification
+output1 = Dense(1, name='cont_out')(x) #regression output
+output2 = Dense(3, activation='softmax', name='cat_out')(x)  #classificition output
+
+model = Model(inputs=inputs, outputs=[output1, output2])
+
+model.compile(loss={'cont_out': 'mean_absolute_error', 
+                    'cat_out': 'sparse_categorical_crossentropy'},
+              optimizer='adam',
+              metrics={'cat_out': tf.metrics.SparseCategoricalAccuracy(name='acc')})
+
+history = model.fit(X, {'cont_out': Y, 'cat_out': Z}, epochs=10, batch_size=8)
+```
+during the backpropagation you have to consider for both losses net loss(J1+J2) and update the weight accordingly.<br>
+you can also do 
+```python
+history = model.fit(X, [Y,Z], epochs=10, batch_size=8)
+```
 ### The loss curve that we get in neural network can be very very difficult to optimize, what are the tool and technique in our pocket to make my neural network better in training.
     - Dropout,
     - Batch Normalization
