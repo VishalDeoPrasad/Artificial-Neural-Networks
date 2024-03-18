@@ -523,6 +523,31 @@ history = model.fit(X, [Y,Z], epochs=10, batch_size=8)
 - but when these student send to the competion then they perform really bad.
 - `Note: here you are seeing that loss is reducing by the cost of other neuron not learning well. you will observer that your training loss reducing very well but you test loss is not reducing well.`
 - `Basically, we are training 50 neural network but there are only 3 neural network which are responsible for reducing loss.`
+- `Dropout` is local phenomena not global phenomana. dropout is apply on layer wise.
+- i do a coin toss(mean it either stay or not stay in certain probability) if it come up to `head` i will drop that neuron and remove all the connection related to that neuron. <br>
+    * it is like you don't have to dependent on your friend you solve it by yourself. it is forcing the neuron to get train by flowing entire information.
+    * it make sure all neuron have participated in training process and there is no strong relience on one specific set of neurons, because if they where absent other guys have to learn. this crated very robust form of neural network. and make your class very stronger.
+- you can also set a dropout rate(=0.3) it means that for every training there is 30% chances that the neuron get dropout and 70% changes that each neuron is not going to drop.
+- after every epoch the neural network connection is back.
+![alt text](image-24.png)
+- every neuron participate in training.
+- `Note: one neuron can learn only the one feature not entire feature`
+- how many neauron we can drop in one layer is __hyperparmeter__.
+- dropout rate is __hyperparmeter__ usually 0.2 or 0.3 is good.
+- `Note: we can't do dense+dropout, dense + dropout, we usually do 2 or 3 dense layer then 1 dropout layer.`
+
+* Q. if all the incoming neuron connection is 0 then that neuron is good for nothing.<br>
+Ans: if the neuron weight is closer to zero then i can say it is inactive,
+
+* `Note: dropout helps to reduces overfitting.`
+* Objective of dropout:
+    - every neuron should learn individually
+    - without depending on other
+
+```python
+model.add(dense(2), activation='relu')
+model.add(dropout(dropout rate=0.2))
+```
 
 ### what is TensorFlow?
 > Tensorflow is basically a neural network package which is design to build a neural network. but it has some learning curve
