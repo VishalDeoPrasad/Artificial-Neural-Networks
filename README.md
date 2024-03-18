@@ -502,6 +502,28 @@ history = model.fit(X, [Y,Z], epochs=10, batch_size=8)
     - hyperparamerter Tunning
 > these are my mathematical animation so that we can create our neural network in more refine way.
 
+## Dropout
+![alt text](image-22.png)
+- image a situation you are a teacher and you have 50 student, and each student has differnt IQ, differnt brain, different attension spam, let say the teacher asked a question and let's say there are 3 student in the first banch who actively answer all the question. 
+- here, what happen the 3 student are training very well but other 47 student are not paying attension. 
+- now you send this 50 student to a competition, what will be the performance of the class? bed right, because only 3 student do well in that group, in that competion independly they have to perform well.
+- what could be teacher do to import this?
+    * special attension
+    * parent teacher meeting
+    * extra class
+- suppose:
+    * Teacher - loss
+    * 50 Students - neurons
+    * Cold calling(randomly asking question) - Dropout
+
+![alt text](image-23.png)
+- now, some neauron have the perfect weight assign, those neuron who having the perfect weight can perform well just like first bancher and the entire set of neuron are relay on those 3 neuron for loss reduction.
+- now here the teacher is feeling good, that whatever he is teaching everyone is getting well. but the teach don't know the other 47 student is not doing good.
+- It mean the entire class the doing good because of 3 front bancher and minimize the loss of entire class by these 3 student. this is like training
+- but when these student send to the competion then they perform really bad.
+- `Note: here you are seeing that loss is reducing by the cost of other neuron not learning well. you will observer that your training loss reducing very well but you test loss is not reducing well.`
+- `Basically, we are training 50 neural network but there are only 3 neural network which are responsible for reducing loss.`
+
 ### what is TensorFlow?
 > Tensorflow is basically a neural network package which is design to build a neural network. but it has some learning curve
 > Keras comes and say, I can create an API which is basically raper over tensorflow and the user is esserly be interacting with keras API, it is design in such a way that a user have very small or shello learning curve.
