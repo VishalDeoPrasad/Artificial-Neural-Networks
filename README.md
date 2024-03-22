@@ -606,7 +606,18 @@ Ans - because the data point is not actually a linear but we try to estimate the
 
 __High Variance__: `y=100+1000x1` small changes in x data big changes in y this is called high variance model <br>
 __Low Variance__:  `y=0.1+10x1` this is low variance model <br>
-`Underfitting` - 
+`note: it is alway prefer weights and beta which are smaller in magnitude.` <br>
+`Underfitting` - when both are score bad.
+
+* In machine learning we have learn we apply ridge and lasso regulization in linear regression. 
+`Q. but why ridge and lasso regulization is applied on linear regession line where all linear regression is simply go linearly`
+
+* one of the biggest problem is having high variance a small changes in data is reflect big changes in output. because of high weight associated to it.
+
+* `Note: Neural network at every stage at every neuron is basically is linear regression + some non linearity if the weight is exemilly high then the output product by that neauron is also high. this mean that the neuron is extemily sensetive towards the small changes in data.`
+
+* we can penalize the model for go in the regions where the weight are high that's what the concept of regulaization. that why in regression is the `loss is MSE` but after apply the regulaization the `loss will be MSE+λ(penalty)`
+![alt text](image-25.png)
 
 
 ### what is TensorFlow?
