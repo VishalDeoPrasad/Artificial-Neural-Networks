@@ -560,6 +560,9 @@ model.add(dropout(dropout rate=0.2))
 
 `Note: RelU is very good activation function for the very deep neural network because it will help in the gradian descent problem`
 
+--------------------------------------------------------------
+Tensorflow and keras-2
+-------------------------------------------------------------
 `Q. Can dropout solve overfitting problem?` <br>
 Ans - dropout is not for overfitting problem, overfitting is handle by regulaization, but dropout is to make sure that the neural network that you created every neuron is balance, 
 <br>-you acutally have underfitted model which needs dropout. your model is getting underfitted because not all neuron is particepting in the training process that can be also a case.
@@ -593,8 +596,17 @@ Ans- yes, it is samething some neuron is over participating some neuron is not p
 `Q. How can we understand the noise`?
 Ans - loss curve help us to understand the noise.
 
+`Q. How many neuron are drop at one iteration?`
+Ans - suppose we have 10 neuron in my dense layer and we apply a dropout layer of probaliblty (0.2) it mean it go to each and every neuron and do a coin toss with a probabilty of 0.2 of droping the particular neuron.
+
 
 ## Regularization
+`Q. Overfitting is when the performance is good at training but perform bad on test data that is called overfitting.why?` <br>
+Ans - because the data point is not actually a linear but we try to estimate the liear regression. <br>
+
+__High Variance__: `y=100+1000x1` small changes in x data big changes in y this is called high variance model <br>
+__Low Variance__:  `y=0.1+10x1` this is low variance model <br>
+`Underfitting` - 
 
 
 ### what is TensorFlow?
