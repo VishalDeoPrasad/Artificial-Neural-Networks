@@ -544,10 +544,58 @@ Ans: if the neuron weight is closer to zero then i can say it is inactive,
     - every neuron should learn individually
     - without depending on other
 
+
+__Add Dropout layer__
+- Droping mean what all the incomming connection to that neuron and all the out going connection from that neuron are disable, it mean that neuron is not avaiable for us not there for us.
+- dropout should be used in initial layer if we use dropout closer to the output layer it kind of sometime create disturance to the learning of model.
+- so dropout should use in initial layer of your neural network not the final layer of your neural network.
+- we can not control the dropout because dropout by design it is random, we can only control the dropout rate. it become our hyperparameter.
+- and you explicly tell like how much dropout you want in a particular layer. 
+- we don't design like dense layer and dropout layer, dense layer and dropout layer, it is like 2-3 dense and 1 dropout layer, 2-3 dense then dropout layer it usally work like that, to much dropout is not good.
+
 ```python
 model.add(dense(2), activation='relu')
 model.add(dropout(dropout rate=0.2))
 ```
+
+`Note: RelU is very good activation function for the very deep neural network because it will help in the gradian descent problem`
+
+`Q. Can dropout solve overfitting problem?` <br>
+Ans - dropout is not for overfitting problem, overfitting is handle by regulaization, but dropout is to make sure that the neural network that you created every neuron is balance, 
+<br>-you acutally have underfitted model which needs dropout. your model is getting underfitted because not all neuron is particepting in the training process that can be also a case.
+
+`Q. When should you opt for dropout layer? give is seanrio` <br>
+Ans - Whenever you have a lot of neuron(deep neural network) and you have noise in you data then you should opt for dropout layer. 
+<br>- bad loss curve are because of noises in your data. if you data do not have noise, it is very predictive then you loss curve is very very smoth in that case. 
+<br>- problem arries when you data have a noise and whenever you data has noice your loss curve is wiredly shape.
+<br>- And when you have lot of neuron trying to fit that noise data certain neuron get initilize into bed region of loss curve.
+<br>- that's why whenever you are solve a problem which has noise data (which is almost most of the time you have noise data) and you wanted to build a deep neural network that you need a dropout layer.
+
+`Q. Shouldn't the dropout be random, can best performance neuron drop at lower rate and low performance neuron should drop at heigher rate?`<br>
+Ans - because we use dropout at initisial level so there is no concept of best performance neuron and worst perofrmace neuron.
+<br> - one who participating vary strongly in gradient, we can slow him down, the neuron who is not participating at all in the loss reduction i want to boost it up, that is what the job of optimizer.
+
+`Q. Why every neuron is not participating in learning process?` <br>
+Ans - Because of bad loss curve shape due of noise in data and to avoid that we introduce the dropout. 
+
+`Q. How can you identify the noise in you data?`
+Ans - Generally, if there is gap between your training loss and validation loss, or you training loss and validation loss is not going beyound a certain degress of accuracy then your data has noice this is how to identify the noise.
+
+`Q. What is noise?` <br>
+Ans - the unpredictibily part of you data is noise.
+<br>-  `noise = 100 - accuracy`, there are `reduable noise` as well as `ireducable noise`.
+<br> reducable noise we can reduce by `dropout`, `regulaization`, `building more neurons` and by changing the `activation function`etc
+<br>- irreducable noise you can not.
+
+`Q. Whan one feature is over shadowing the other relevent feature, shouldn't we use the drop out to balance the impact of the feature?`<br>
+Ans- yes, it is samething some neuron is over participating some neuron is not participating.
+
+`Q. How can we understand the noise`?
+Ans - loss curve help us to understand the noise.
+
+
+## Regularization
+
 
 ### what is TensorFlow?
 > Tensorflow is basically a neural network package which is design to build a neural network. but it has some learning curve
@@ -617,7 +665,9 @@ model.add(Dense(units=1, activation='linear'), name='Output') #units is depends 
 ```
 
 ### Optimizer
-An optimizer in the context of neural networks and machine learning is an algorithm used to minimize the loss function by adjusting the parameters (weights and biases) of the model during training. It determines how the model learns by updating these parameters in order to improve its performance over time. Common optimizers include stochastic gradient descent (SGD), Adam, RMSprop, and Adagrad, each with its own characteristics and advantages depending on the nature of the problem being solved.
+- one who participating vary strongly in gradient, we can slow him down, the neuron who is not participating at all in the loss reduction i need to boost it up, that is job of optimizer.
+
+- An optimizer in the context of neural networks and machine learning is an algorithm used to minimize the loss function by adjusting the parameters (weights and biases) of the model during training. It determines how the model learns by updating these parameters in order to improve its performance over time. Common optimizers include stochastic gradient descent (SGD), Adam, RMSprop, and Adagrad, each with its own characteristics and advantages depending on the nature of the problem being solved.
 ```python
 sgd = keras.optimizers.SGD(
     learning_rate=0.01,
