@@ -602,7 +602,7 @@ Ans - suppose we have 10 neuron in my dense layer and we apply a dropout layer o
 
 ## Regularization
 `Q. Overfitting is when the performance is good at training but perform bad on test data that is called overfitting.why?` <br>
-Ans - because the data point is not actually a linear but we try to estimate the liear regression. <br>
+Ans - because the data point is not actually a linear but we try to estimate the linear regression. <br>
 
 __High Variance__: `y=100+1000x1` small changes in x data big changes in y this is called high variance model <br>
 __Low Variance__:  `y=0.1+10x1` this is low variance model <br>
@@ -619,6 +619,87 @@ __Low Variance__:  `y=0.1+10x1` this is low variance model <br>
 * we can penalize the model for go in the regions where the weight are high that's what the concept of regulaization. that why in regression is the `loss is MSE` but after apply the regulaization the `loss will be MSE+λ(penalty)`
 ![alt text](image-25.png)
 
+`note 1: inflate the weights such that my neuron has to build a lot of non-linear curve to fit those weights that is the decision we will have to take if there were no panalty i would have my curve as non linear as possible and fit all of the weights. so because of the panalty i kind of stop.`
+
+`note 2: if you data does not have any noise(a points which are out of the pattern) then we don't want regulization. we always want the data to be fit completly when there is no noise`
+
+`note 3: if the data has very high amount of noise then abously i want some regulization, not wanted to create a very twisty model by tunning the weights of each neuron possible to very very high values. so this is the concept of regulization. it is like constrain the weights(constrain optimizer)`
+
+`Note 4: when the MSE has to reducing because you curve fitting the points you weight are bolten up during the process, and regulization is wanting to create the balance.`
+
+In regulization, when MSE reduction is less and bloating is more then it stop.
+![alt text](image-26.png)
+![alt text](image-27.png)
+
+`Q. is bias and underfit not big consern in neural network?` <br>
+Ans - Neural networks can always overcome underfitting because i can introduce as much neuron as i want. how every it is not completly true sometime neural networks also stuggle if we do not have right features. but generalize it do not stuggle underfitting because i can introduce those features also introduce more number of neuron.
+
+`Q. what if you data don't have any noise will you use regulization?`
+Ans - No, if my data don't have noise then you don't need regulization, because if your data don't have any noise then it is okay to fit entire curve properly.
+
+`Q. What is regulization?`
+Ans - Regulization is nothing but contrain optimization, we are saying please reduce the MSE but do not vilate these contrains 
+<br>- they are soft contrain. it is not like if you go to with bloated weight i will cut you hand(example).
+<br>-if you go the bloated weight i will put some panalty, i will kind of pull you back.
+<br> R = MSE + Penalty
+
+`Q. What underfit looks like in term of weights?` <br>
+Ans - Underfit has low weights or lesser number of weights.
+
+`Q. when do we introduce the regulization`?
+Ans - when we see that you training loss is kind of diverging from your validation loss. then we can clearly say that our model is kind of overfitting.
+<br>- in such case we introduce our regulization
+![alt text](image-28.png)
+![alt text](image-29.png)
+
+## Mini Batch Gradient Descent
+- let think about 2 schnairo
+1. Schaniro 
+    1. we have input x1... xp and you have y output.(1000 rows of data)
+    1. we started with random weights
+    1. using random weight we forward propagate calculated the y
+    1. you send each row of data and you calculate each y.
+    1. you calulate the total loss of the system by summing up the entire loss
+    1. and difference the loss w.r.t all the weights and updated the weights using gradient descent.
+    1. end of one epoch
+2. schanrio
+    1. you initilize with random weights
+    1. let's say you have 1000 rows of data
+    1. you take 100 rows of data data.
+    1. using this random set of weights you forward propagate and you calculate your predicted y.
+    1. after that you sum up your loss 
+    1. and you update you random weights
+    1. then using the revise set of weight you go and select another 100 rows of data, take the input X and find out the y, calculate the loss update the weights.
+    1. now using update weight you take another 100 chunks of data send the X's, find out the y, find out the loss and update the weights.
+    1. you do this 10 times and you say 1 epoch is completed
+
+`Q. Which Schaniro is best and why?` <br>
+Ans - Sechnario 2 is better
+* in 2nd times, i have upate my weights 10 times in one epoch but in 1st option i have update the weight 1 times in 1 epoch.
+* you might converage faster with option 2
+* 2nd as the loss has been reduced 10 times
+* let's consider after just using 100 rows of data i have go the better estimate of weights, using the better estimate of weights i propegate 100 chunks of data and i calcuate the loss and i back propagate. within 200 of data 2 already updated. by the time at last set of 100 rows of data my weights have already 900 rows of data already and they are updated 9 times already, some might luckey get better weights then previous some might get unluckey get even worse weight, but overall in one apoch i have reduce the reduce the weights 9 times.
+* Within 1 epoch i would have acheive much lower loss as compair to the situation i update the weight only one times.
+* I understand send complete data the loss curve will be smother but it will be much slower.
+* in situation 2, it might be not good 1,2,3 time but it will is get better in 9th times, it mean that our model ready seen 800 of data and it is reduce 8 time and update the weights. 
+
+`note : batch size is up to me, i can choose the batch size`
+`advanatge:` 
+1. Faster conversion of weights,
+2. smothe weight curve
+3. we can acheive the minima faster in mini-batch gradient descent, for exaple mini-batch gradient descent, we can close in 10 epoch but in gradient descent it might need 50 epoch to reach to global minima.
+![alt text](image-30.png)
+4. other benfit of this, if you have 100 million rows of data, to perform forward propagtion and backward propagation of this 100 millions of data, you just have to enject the 100 millions of data in your RAM, which itself give you out of memory. if i have take the data in batch let say 512 it will take very less space in RAM to process the data. now it don't mean how big is our data size.
+
+### Batch size
+* Batch size is choosen in such a way that 2 less in batch size will become very very noise and too bigger batch size defeat the purpose of fitting in memory.
+* good batch size between 512 to 1024 for tabular and text data
+* but if you deal with images(let say 2 MB per image size) 64 to 128 is good batch size.
+
+### epoch
+one epoch is define as a forward propagation and a backward propagation done on the entire set of data one time, weather you do it all at once or you send it in chunks, the epoch defination can not change.
+
+## Batch Normalization
 
 ### what is TensorFlow?
 > Tensorflow is basically a neural network package which is design to build a neural network. but it has some learning curve
