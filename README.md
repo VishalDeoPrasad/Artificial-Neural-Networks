@@ -553,10 +553,21 @@ __Add Dropout layer__
 - and you explicly tell like how much dropout you want in a particular layer. 
 - we don't design like dense layer and dropout layer, dense layer and dropout layer, it is like 2-3 dense and 1 dropout layer, 2-3 dense then dropout layer it usally work like that, to much dropout is not good.
 
+### Implementation Dropout using Tensorflow
 ```python
-model.add(dense(2), activation='relu')
-model.add(dropout(dropout rate=0.2))
+L2Reg = tf.keras.regularizers.L2(l2=le-6)
+
+model = Sequential([
+    Dense(256, activation='relu', kernel_regularizer=L2Reg),
+    Dropout(0.3), # we can introduce the dropout as a layer
+    Dense(128, activation='relu', kernel_regularizer=L2Reg),
+    Dropout(0.3),
+    Dense(64, activation='relu', kernel_regularizer=L2Reg),
+    #Dropout(0.3) # as we closer to the output we avoid using dropouts
+    Dense(1, activation='sigmoid')
+])
 ```
+`Dropout layer(0.3)`: 0.3 is dropout rate, higher the dropout rate higher the propensity of neurons to get dropout, lower the propensity rate lower is changes of neurons to get dropout.
 
 `Note: RelU is very good activation function for the very deep neural network because it will help in the gradian descent problem`
 
@@ -652,6 +663,21 @@ Ans - when we see that you training loss is kind of diverging from your validati
 ![alt text](image-28.png)
 ![alt text](image-29.png)
 
+### Implement L2 regulization on your neural network using Tensorflow.
+```python
+# you instaicate your regulization object with the laglagius parameter
+L2Reg = tf.keras.regularizers.L2(l2=1e-6)
+
+# create a variable and feed that variable to each dense layer
+Sequential([
+    Dense(256, activation='relu', kernal_regularizer=L2Reg)
+    Dense(128, activation='relu', kernal_regularizer=L2Reg)
+    Dense(64, activation='relu', kernal_regularizer=L2Reg)
+    Dense(1, activation='sigmoid')
+])
+```
+
+
 ## Mini Batch Gradient Descent
 - let think about 2 schnairo
 1. Schaniro 
@@ -699,7 +725,57 @@ Ans - Sechnario 2 is better
 ### epoch
 one epoch is define as a forward propagation and a backward propagation done on the entire set of data one time, weather you do it all at once or you send it in chunks, the epoch defination can not change.
 
+### Demo of Batch size and epoch
+when we do model.fit i call it batch_size=128, it is telling us that i once take 128 rows from the training set at random pass them through the forward progation using random set of weight using first iteration,
+* calculate the loss
+* update the weight
+* using the updated weights i will randomly pick up next set of 128 rows of data from the training set, 
+* send that through the model calculate the loss, update the weights
+* now using the updated weight i will send 3re set of 128 rows of data, from randomly pick up from the training set, calculate the loss, update the weight and so on so forth.
+```python
+model.fit(x_train, y_train, validation_data=(x_val, y_val), epochs=10, batch_size=128, verbose=0, callbacks=[tb_callback])
+```
+
+`Q. how many times your weight get updated? if you have 10,000 data points, batch size is 200 and epoch is 20.`
+Ans - In this scenario:
+* Number of batches per epoch = Total data points / Batch size = 10,000 / 200 = 50
+* Total weight updates per epoch = Number of batches per epoch = 50
+* Total weight updates = Total weight updates per epoch * Number of epochs = 50 * 20 = 1000
+
+So, the weights get updated 1000 times in total.
+
+`Note : to less batch size make you loss curve very noise`
+
+### Encoding method
+Neural network hate categorical features, they can not deal with categorical feature, there is few way to deal with categorical feature.
+1. One-hot encoding
+2. Label encoding
+3. Target encoding <br>
+![alt text](image-31.png) <br>
+Python Implementation
+```python
+from category_encoders import TargetEncoder
+enc = TargetEncoder(cols=['Warehouse_block', 'Mode_of_Shipment', 'Product_Importance','Gender']
+X_val = enc.transform(X_val, y_val)
+X_test = enc.transform(X_test, y_test)
+X_train.head()
+```
+4. other.. cat boost encode
+
+### Standardization (Standard Scaling)
+Standard Scaling is very very useful. it solves 2 problem 
+1. `Weight are not bloated`: it contolls the bloating of the weights and 
+2. `Normalize the importance of all the features:` - certain feature get more importance and certain features not, it also can be controlled by standard scalling.
+
+`Note: Standard Scaling is very underated things, it help in two thing first in bloating up the weights and also parcial overfitting under differnt features can be solved using standard scaling.`
+
 ## Batch Normalization
+when i send scaled data to our neural network the input layer is experiensing scaled value, but what about the 5th hidden layer or 6th hidden layer, `Q. Is there any grantity that 5th scaled layer or 6th layer experience scaled valued?` <br>
+Ans - There is no grantity that 5th hidden layer, 6th hidden layer experience scaled value.
+input layer experience scaler value because i standard scaled it.
+
+`Q. Do you think it is nessary steps that within the neural network i should also do some kind of scaling?`
+Ans - That is what `batch normalization` help us to do. it also help us to explode the gradient descent
 
 ### what is TensorFlow?
 > Tensorflow is basically a neural network package which is design to build a neural network. but it has some learning curve
