@@ -775,7 +775,33 @@ Ans - There is no grantity that 5th hidden layer, 6th hidden layer experience sc
 input layer experience scaler value because i standard scaled it.
 
 `Q. Do you think it is nessary steps that within the neural network i should also do some kind of scaling?`
-Ans - That is what `batch normalization` help us to do. it also help us to explode the gradient descent
+Ans - That is what `batch normalization` help us to do. it also help us to explode the gradient descent.
+
+-------------------------------------------------------------------------
+Optimizers for NNs: <br>
+Toppic : Batch Normalization, Optimiers
+-------------------------------------------------------------------------
+`Q. Dropout`: it is a layer <br>
+`Q. Regulalization:` In regulalization we are saying, you can reduce the MSE but don't go on the cost of exploading the weights. just add some panalty to the loss function to avoid you weight to bloated up. <br>
+`Q. Mini Batch Gradient descent`: take batch or chuks of data and calculate the loss and update the random weight. conversion of loss is very fast with respect to another gradient descent. in one epoch my weights get updated 100 times. how much data is to carry is hyperparameter.
+`Q. what is optimzers`: the noraml gradient descent really do not have have power to handle such problems that a loss function handle. that's way we need optimizer.
+
+### Batch Normalization
+let say we have a neural network and my input data is scaled preferly standard scaling, our X has to scaled so our Y also have to scaled. <br>
+`Advantage`: this give us advantage that non of the features get advantage, all the features are in uniform kind of importance. `so there is no difference between units of the features`.
+
+##### Experiment
+* let's say you have diabetis dataset, you run an logistic regrssion on diabetis dataset and see the coefficent of logistic regression on unscaled data.
+* next you scaled the data using standard scaling and then run a logistic regession then see the coefficent. and you will see the drastic difference in coefficent
+* when you see in the coefficent on unscaled data you will se the coefficent in all over the data but when you see the coefficent of scaled data you will see much more stable like 1, -1, 1.9, .9.
+* scaling have very very beautiful effects on the weight the weights are very much stable it do not bloaten up here and there.
+
+`Q. You basically the scaled the data when you are feeding into the neural network but what happen in side the neural network within the hidden layer there is no scaling happening here? so you are giving advantage of weight in input layer that is great with what fault of 2nd hidden layer why it is not given scaled input into the system, what happen when you have very deep neural network, the 4th hidden layer will never get scaled input, why there is discrimination that you introduce the scaled value to input layer but you don't introudce the scaling to hidden layer?`
+Ans - This is bed things, if we don't do this for all the layer then ultimatly the entire purpose get wasted, we have to introduce the scaling to entire layer. that requirment is handle by batch normalization. <br>
+
+`Batch Normalization`: Batch normalization is basically a layer which is introduce after the dense layer. pupose of batch normalization is very very simple
+
+
 
 ### what is TensorFlow?
 > Tensorflow is basically a neural network package which is design to build a neural network. but it has some learning curve
