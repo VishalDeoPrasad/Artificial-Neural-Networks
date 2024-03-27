@@ -796,12 +796,46 @@ let say we have a neural network and my input data is scaled preferly standard s
 * when you see in the coefficent on unscaled data you will se the coefficent in all over the data but when you see the coefficent of scaled data you will see much more stable like 1, -1, 1.9, .9.
 * scaling have very very beautiful effects on the weight the weights are very much stable it do not bloaten up here and there.
 
+`Q. when the data is scaled in the begining does it scaled going deeper?`
+Ans - NO
+
 `Q. You basically the scaled the data when you are feeding into the neural network but what happen in side the neural network within the hidden layer there is no scaling happening here? so you are giving advantage of weight in input layer that is great with what fault of 2nd hidden layer why it is not given scaled input into the system, what happen when you have very deep neural network, the 4th hidden layer will never get scaled input, why there is discrimination that you introduce the scaled value to input layer but you don't introudce the scaling to hidden layer?`
 Ans - This is bed things, if we don't do this for all the layer then ultimatly the entire purpose get wasted, we have to introduce the scaling to entire layer. that requirment is handle by batch normalization. <br>
 
-`Batch Normalization`: Batch normalization is basically a layer which is introduce after the dense layer. pupose of batch normalization is very very simple
+`Q. Using activation function will it give low value?`
+Ans - Tenh does to its certain extend. it helps to scaling but not relu.
 
+`Q. does dropout is use to drop high weight?`
+Ans - No, Dropout is not for droping high weights it make sure that all the neuron learn in the similar fashion.
 
+`Q. what effect we will see if we scaled at every point?`
+Ans - if we scaled at every point we might loss the distribution
+
+`Batch Normalization`: Batch normalization is basically a layer which is introduce after the dense layer. pupose of batch normalization is very very simple.
+so, batch normalization is basically a scaling within the hidden layer.
+![alt text](image-32.png)
+
+Layer that normalizes its inputs.
+
+Batch normalization applies a transformation that maintains the mean output close to 0 and the output standard deviation close to 1.
+
+Importantly, batch normalization works differently during training and during inference.
+
+__During training__ (i.e. when using fit() or when calling the layer/model with the argument training=True), the layer normalizes its output using the mean and standard deviation of the current batch of inputs. That is to say, for each channel being normalized, the layer returns 
+* ```gamma * (batch - mean(batch)) / sqrt(var(batch) + epsilon) + beta, where:```
+
+    `epsilon` is small constant (configurable as part of the constructor arguments) <br>
+    `gamma` is a learned scaling factor (initialized as 1), which can be disabled by passing scale=False to the constructor. <br>
+    `beta` is a learned offset factor (initialized as 0), which can be disabled by passing center=False to the constructor.
+
+__During inference__ (i.e. when using evaluate() or predict() or when calling the layer/model with the argument training=False (which is the default), the layer normalizes its output using a moving average of the mean and standard deviation of the batches it has seen during training. That is to say, it returns 
+* ```gamma * (batch - self.moving_mean) / sqrt(self.moving_var+epsilon) + beta.```
+
+    `self.moving_mean` and `self.moving_var` are non-trainable variables that are updated each time the layer in called in training mode, as such:
+
+    `moving_mean` = moving_mean * momentum + mean(batch) * (1 - momentum)
+    `moving_var` = moving_var * momentum + var(batch) * (1 - momentum)
+    As such, the layer will only normalize its inputs during inference after having been trained on data that has similar statistics as the inference data.
 
 ### what is TensorFlow?
 > Tensorflow is basically a neural network package which is design to build a neural network. but it has some learning curve
@@ -871,9 +905,20 @@ model.add(Dense(units=1, activation='linear'), name='Output') #units is depends 
 ```
 
 ### Optimizer
-- one who participating vary strongly in gradient, we can slow him down, the neuron who is not participating at all in the loss reduction i need to boost it up, that is job of optimizer.
+`Q. What are the problem of gradient descent alogorithm?` <br>
+Ans - 
+1. Multiple local minima
+1. May not always converge to global minima. 
+![alt text](image-33.png)
+if you intilize the weight here then weights get settle here, he will say i achive the minima. this is not his problem, if he go left he will come opposite if he go right he will come opposite.
+whatever i wanted he has done and stuck at local minima.
+1. some time because of high learning rate i am not able to convert becuase i'm constatly rotating here and there.
+1. because of bed initiliztion
+![alt text](image-34.png)
 
-- An optimizer in the context of neural networks and machine learning is an algorithm used to minimize the loss function by adjusting the parameters (weights and biases) of the model during training. It determines how the model learns by updating these parameters in order to improve its performance over time. Common optimizers include stochastic gradient descent (SGD), Adam, RMSprop, and Adagrad, each with its own characteristics and advantages depending on the nature of the problem being solved.
+-one who participating vary strongly in gradient, we can slow him down, the neuron who is not participating at all in the loss reduction i need to boost it up, that is job of optimizer.
+
+-An optimizer in the context of neural networks and machine learning is an algorithm used to minimize the loss function by adjusting the parameters (weights and biases) of the model during training. It determines how the model learns by updating these parameters in order to improve its performance over time. Common optimizers include stochastic gradient descent (SGD), Adam, RMSprop, and Adagrad, each with its own characteristics and advantages depending on the nature of the problem being solved.
 ```python
 sgd = keras.optimizers.SGD(
     learning_rate=0.01,
