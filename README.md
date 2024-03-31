@@ -1271,5 +1271,109 @@ plt.show()
 
 * _Option1_: Either you use simple `label encoding` and `Sparse Categorical Cross Entropy`
 * _Option2_: or you use `one hot encoding` and `Sparse Categorical Cross Entropy`
+------------------------------------------
+  Hyperparameter Tuning for NNs
+------------------------------------------
 
-# Hyperparameter Tuning for NNs
+## Autoencoders using Neural Networks
+`Q. What is the purpose of Autoencoders?` <br>
+Ans - In a given data there is some deterministic pattern + noise.
+![alt text](image-38.png)
+input is same as output, so it learn clean form of data. this entire system become noise remover system. 
+
+`Q. what is low dimention representation?` <br>
+Ans - when we have sparse data then we go for low dimenation represenations. the whole purpose the low dimenstion representatioln is to redicate or remove unnessary information, that is the entire purpose of low dimentional represenation. so low dimenational repesentation is ment to loss data. and it is generally done when we have sparse data.
+
+#### Application
+
+**1. Dimensionality Reduction/ Compression**
+Here, compression doesn't mean reducing the space
+- but to reduce the number of features of input vectors
+
+Reducing the dimensions means
+- faster inference time
+- low latency
+We can also use these embeddings for visualization
+
+**2. Denoising**
+We can use AE (Autoencoders) to denoise the data
+
+**3. Embeddings**
+
+We can use AE to generate embeddings
+- These embeddings can be used for
+    - recommender system
+    - clustering
+    - image search
+
+### implementation of Autoencoders
+```python
+import keras
+from keras import layers
+from keras.datasets import mnist
+import numpy as np
+
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+#Normalization of input
+x_train = x_train.astype('float32') / 255.
+x_test = x_test.astype('float32') / 255.
+
+#Reshaping the images to 1D vectors
+x_train = x_train.reshape((len(x_train), np.prod(x_train.shape[1:])))
+x_test = x_test.reshape((len(x_test), np.prod(x_test.shape[1:])))
+
+#AutoEncoder model - Functional
+input_img = keras.Input(shape=(784,))
+encoded = layers.Dense(128, activation='relu')(input_img)
+encoded = layers.Dense(64, activation='relu')(encoded)
+encoded = layers.Dense(32, activation='relu')(encoded)
+
+decoded = layers.Dense(64, activation='relu')(encoded)
+decoded = layers.Dense(128, activation='relu')(decoded)
+decoded = layers.Dense(784, activation='sigmoid')(decoded)
+
+autoencoder = keras.Model(input_img, decoded)
+autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
+
+autoencoder.fit(x_train, x_train,
+                epochs=10,
+                batch_size=256,
+                shuffle=True,
+                validation_data=(x_test, x_test))
+
+```
+![alt text](image-39.png)
+
+```python
+autoencoder.summary()
+```
+![alt text](image-40.png)
+
+### Remove the noise from image
+```python
+#AutoEncoder model
+input_img = keras.Input(shape=(784,))
+encoded = layers.Dense(128, activation='relu')(input_img)
+encoded = layers.Dense(64, activation='relu')(encoded)
+encoded = layers.Dense(32, activation='relu')(encoded)
+
+decoded = layers.Dense(64, activation='relu')(encoded)
+decoded = layers.Dense(128, activation='relu')(decoded)
+decoded = layers.Dense(784, activation='sigmoid')(decoded)
+
+# Compile and Fit
+autoencoder = keras.Model(input_img, decoded)
+autoencoder.compile(optimizer='adam', loss='binary_crossentropy')
+
+autoencoder.fit(x_train_noisy, x_train, # NOTE: input is noisy, output is non-noisy
+                epochs=100,
+                batch_size=256,
+                shuffle=True,
+                validation_data=(x_test_noisy, x_test))
+```
+![alt text](image-41.png)
+
+## Recommender System using AE
+![alt text](image-42.png)
+similarity between movies vs movies and user vs user
