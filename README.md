@@ -781,12 +781,18 @@ Ans - That is what `batch normalization` help us to do. it also help us to explo
 Optimizers for NNs: <br>
 Toppic : Batch Normalization, Optimiers
 -------------------------------------------------------------------------
-`Q. Dropout`: it is a layer <br>
+`Q. Dropout`: it is a layer. we kind of dropout random neuron during the tranining processs for each iteration such that it creates balanced form of learning for all neuron in neural network. <br>
+`Q. When to use Dropout?` <br>
+Ans - Dropout is used when you are building a deep neural network, and you have the noise in your data then you essentially make sure you have dropout layer in your data.<br>
+`Q. How many dropout layer we should use?` <br>
+Ans - We should not use too much dropout layer, we should use 2 or 3 dropout layer when we have 8 or 9 layers in our hidden layer. it kind of create robust network.<br>
 `Q. Regulalization:` In regulalization we are saying, you can reduce the MSE but don't go on the cost of exploading the weights. just add some panalty to the loss function to avoid you weight to bloated up. <br>
-`Q. Mini Batch Gradient descent`: take batch or chuks of data and calculate the loss and update the random weight. conversion of loss is very fast with respect to another gradient descent. in one epoch my weights get updated 100 times. how much data is to carry is hyperparameter.
+-regulization is direct transformation at the loss function end <br>
+`Q. Mini Batch Gradient descent`: take batch or chunks of data and calculate the loss and update the random weight. conversion of loss is very fast with respect to another gradient descent. in one epoch my weights get updated 100 times. how much data is to carry is hyperparameter.
 `Q. what is optimzers`: the noraml gradient descent really do not have have power to handle such problems that a loss function handle. that's way we need optimizer.
 
 ### Batch Normalization
+-standard scaling is very important propertity in neural network, the weights we have in our neural network should not bias towards anything the features should is unitless, why don't we maintain in the hidden layer also. <br>
 let say we have a neural network and my input data is scaled preferly standard scaling, our X has to scaled so our Y also have to scaled. <br>
 `Advantage`: this give us advantage that non of the features get advantage, all the features are in uniform kind of importance. `so there is no difference between units of the features`.
 
@@ -905,24 +911,45 @@ model.add(Dense(units=1, activation='linear'), name='Output') #units is depends 
 ```
 
 ### Optimizer
-`Q. What are the problem of gradient descent alogorithm?` <br>
+`one who participating vary strongly in gradient, we can slow him down, the neuron who is not participating at all in the loss reduction i need to boost it up, that is job of optimizer`. <br>
+`Q. What are the problem of gradient descent alogorithm? or what problem does optimizer solve.` <br>
 Ans - 
 1. Multiple local minima
 1. May not always converge to global minima. 
 ![alt text](image-33.png)
 if you intilize the weight here then weights get settle here, he will say i achive the minima. this is not his problem, if he go left he will come opposite if he go right he will come opposite.
 whatever i wanted he has done and stuck at local minima.
-1. some time because of high learning rate i am not able to convert becuase i'm constatly rotating here and there.
+1. some time because of high learning rate i am not able to converge becuase i'm constatly rotating here and there.
 1. because of bed initiliztion
 ![alt text](image-34.png)
 
--one who participating vary strongly in gradient, we can slow him down, the neuron who is not participating at all in the loss reduction i need to boost it up, that is job of optimizer.
 
 -An optimizer in the context of neural networks and machine learning is an algorithm used to minimize the loss function by adjusting the parameters (weights and biases) of the model during training. It determines how the model learns by updating these parameters in order to improve its performance over time. Common optimizers include stochastic gradient descent (SGD), Adam, RMSprop, and Adagrad, each with its own characteristics and advantages depending on the nature of the problem being solved.
+### Gradient descent new weight updation.
+![alt text](image-36.png)
+
+#### Topics in Optimizers
+    1. Momentum
+    2. Nestern of Accelated gradient with momentum
+    3. Adagrade
+    4. RMS Prop
+    5. Adam
+
+1. __Momentum__: use point gradient. take the historcal gradient and point gradent. 
+* we use this when our loss curve is no smooth
+* Arrive at global minima faster. 
+* it also skip the small local minima.
+* ![alt text](image-35.png)
+* gradient = hist + current gradient.
+
+2. __Nestern of Accelated gradient with momentum__: use history of gradient, and look ahead
+
+3. __Adagrade__: full form is adaptive gradient, your update of your weight is based on gradient decent update.
+
 ```python
-sgd = keras.optimizers.SGD(
+momentum = keras.optimizers.SGD(
     learning_rate=0.01,
-    momentum=0.0,
+    momentum=0.5, #this is the momentum
     nesterov=False,
     weight_decay=None,
     clipnorm=None,
@@ -935,6 +962,157 @@ sgd = keras.optimizers.SGD(
     **kwargs
 )
 ```
+
+## Callbacks
+`Q. What is the purpose of callbacks?`
+Ans - they want to monitor 'x' at the end of every epoch/batch, then do what with the monitoring?
+1. Take a decision
+2. Compute something
+
+### Types of Callback
+1. __Early stopping__: suppose you training a model and you have given 200 epoch. irrespective of epoch we don't want our model to learn till 200 epoch, it is a chances that our model give best model(weight) in between the jurney not at the end of the juerney. if i already go the best the best and we see that it is not imporving further then i should stop further training. <br>
+__Decision 1:__ `whenever i got the best validation loss i should be able to save the weights corresponing to it.` <br>
+__Decision 2:__ `if i got the best weight and i run n epoch to find the best of best weight then i should stop it`
+
+__Early Stop:__ if my validation loss don't improve n number of epoch then i should stop. in other words if valiation loss does not improve(decrese) beyond a well defined threshold for an user defined number of epoch then i stop the training.
+```python
+keras.callbacks.EarlyStopping(
+    monitor="val_loss",
+    min_delta=0,
+    patience=0,
+    verbose=0,
+    mode="auto",
+    baseline=None,
+    restore_best_weights=False,
+    start_from_epoch=0,
+)
+```
+* if an imporovement is less then certain delta and at certain epoch(patience) i will stop the model.
+Stop training when a monitored metric has stopped improving.
+
+Assuming the goal of a training is to minimize the loss. With this, the metric to be monitored would be 'loss', and mode would be 'min'. A model.fit() training loop will check at end of every epoch whether the loss is no longer decreasing, considering the min_delta and patience if applicable. Once it's found no longer decreasing, model.stop_training is marked True and the training terminates.
+
+The quantity to be monitored needs to be available in logs dict. To make it so, pass the loss or metrics at model.compile().
+
+Arguments
+1. __monitor__: Quantity to be monitored. Defaults to "val_loss".
+2. __min_delta__: Minimum change in the monitored quantity to qualify as an improvement, i.e. an absolute change of less than min_delta, will count as no improvement. Defaults to 0.
+3. __patience__: Number of epochs with no improvement after which training will be stopped. Defaults to 0.
+4. __verbose__: Verbosity mode, 0 or 1. Mode 0 is silent, and mode 1 displays messages when the callback takes an action. Defaults to 0.
+5. __mode__: One of {"auto", "min", "max"}. In min mode, training will stop when the quantity monitored has stopped decreasing; in "max" mode it will stop when the quantity monitored has stopped increasing; in "auto" mode, the direction is automatically inferred from the name of the monitored quantity. Defaults to "auto".
+6. __baseline__: Baseline value for the monitored quantity. If not None, training will stop if the model doesn't show improvement over the baseline. Defaults to None.
+7. __restore_best_weights__: Whether to restore model weights from the epoch with the best value of the monitored quantity. If False, the model weights obtained at the last step of training are used. An epoch will be restored regardless of the performance relative to the baseline. If no epoch improves on baseline, training will run for patience epochs and restore weights from the best epoch in that set. Defaults to False.
+8. __start_from_epoch__: Number of epochs to wait before starting to monitor improvement. This allows for a warm-up period in which no improvement is expected and thus training will not be stopped. Defaults to 0.
+
+#### Example
+```python
+callback = keras.callbacks.EarlyStopping(monitor='loss', patience=3)
+# This callback will stop the training when there is no improvement in
+# the loss for three consecutive epochs.
+model = keras.models.Sequential([keras.layers.Dense(10)])
+model.compile(keras.optimizers.SGD(), loss='mse')
+history = model.fit(np.arange(100).reshape(5, 20), np.zeros(5), epochs=10, batch_size=1, callbacks=[callback], verbose=0)
+len(history.history['loss'])  # Only 4 epochs are run.
+```
+
+### Model-checkpoint callback
+Irrespective of weather i am using early stopping or not, whenever my model has least validation loss i should save that point, that is acheive through model checkpoint checkpoints.
+```python
+keras.callbacks.ModelCheckpoint(
+    filepath,
+    monitor="val_loss",
+    verbose=0,
+    save_best_only=False,
+    save_weights_only=False,
+    mode="auto",
+    save_freq="epoch",
+    initial_value_threshold=None,
+)
+```
+
+Callback to save the Keras model or model weights at some frequency.
+
+ModelCheckpoint callback is used in conjunction with training using model.fit() to save a model or weights (in a checkpoint file) at some interval, so the model or weights can be loaded later to continue the training from the state saved.
+
+A few options this callback provides include:
+* Whether to only keep the model that has achieved the "best performance" so far, or whether to save the model at the end of every epoch regardless of performance.
+* Definition of "best"; which quantity to monitor and whether it should be maximized or minimized.
+* The frequency it should save at. Currently, the callback supports saving at the end of every epoch, or after a fixed number of training batches.
+* Whether only weights are saved, or the whole model is saved.
+
+```python
+model.compile(loss=..., optimizer=..., metrics=['accuracy'])
+
+EPOCHS = 10
+checkpoint_filepath = '/tmp/ckpt/checkpoint.model.keras'
+model_checkpoint_callback = keras.callbacks.ModelCheckpoint(
+    filepath=checkpoint_filepath,
+    monitor='val_accuracy',
+    mode='max',
+    save_best_only=True)
+
+# Model is saved at the end of every epoch, if it's the best seen so far.
+model.fit(epochs=EPOCHS, callbacks=[model_checkpoint_callback])
+
+# The model (that are considered the best) can be loaded as -
+keras.models.load_model(checkpoint_filepath)
+
+# Alternatively, one could checkpoint just the model weights as -
+checkpoint_filepath = '/tmp/ckpt/checkpoint.weights.h5'
+model_checkpoint_callback = keras.callbacks.ModelCheckpoint(
+    filepath=checkpoint_filepath,
+    save_weights_only=True,
+    monitor='val_accuracy',
+    mode='max',
+    save_best_only=True)
+
+# Model weights are saved at the end of every epoch, if it's the best seen
+# so far.
+model.fit(epochs=EPOCHS, callbacks=[model_checkpoint_callback])
+
+# The model weights (that are considered the best) can be loaded as -
+model.load_weights(checkpoint_filepath)
+```
+
+### Learning Rate Scheduler Callback
+It make you model converge smoother, you will see less abration to tail end.
+```python
+keras.callbacks.LearningRateScheduler(schedule, verbose=0)
+```
+At the beginning of every epoch, this callback gets the updated learning rate value from schedule function provided at __init__, with the current epoch and current learning rate, and applies the updated learning rate on the optimizer.
+
+Arguments
+
+1. __schedule__: A function that takes an epoch index (integer, indexed from 0) and current learning rate (float) as inputs and returns a new learning rate as output (float).
+1. __verbose__: Integer. 0: quiet, 1: log update messages.
+Example
+
+```python
+>>> # This function keeps the initial learning rate for the first ten epochs
+>>> # and decreases it exponentially after that.
+>>> def scheduler(epoch, lr):
+...     if epoch < 10:
+...         return lr
+...     else:
+...         return lr * ops.exp(-0.1)
+>>>
+>>> model = keras.models.Sequential([keras.layers.Dense(10)])
+>>> model.compile(keras.optimizers.SGD(), loss='mse')
+>>> round(model.optimizer.learning_rate, 5)
+0.01
+```
+
+```python
+>>> callback = keras.callbacks.LearningRateScheduler(scheduler)
+>>> history = model.fit(np.arange(100).reshape(5, 20), np.zeros(5),
+...                     epochs=15, callbacks=[callback], verbose=0)
+>>> round(model.optimizer.learning_rate, 5)
+0.00607
+```
+
+### TensorBoard Callback
+Tensorboard is another callback, it is just a visualization tools, it is fancy way to show how weights are moving, how train validation loss is moving.
+
 ### compile function
 This line of code is from a Python script using TensorFlow or a similar deep learning framework for model compilation. 
 
@@ -1086,13 +1264,12 @@ plt.title("Accuracy VS Epochs")
 plt.show()
 ```
 
-
-
-
-
-
 ### Log Loss(Categorical Cross Entropy) vs Sparse Categorical Cross Entropy
 
 + y^ = [0.2 0.7 0.1]    y = [1 0 0] --> One hot Encoding
-+ y^ = [0.2 0.7 0.1]    y = 1       --> Categorical
++ y^ = [0.2 0.7 0.1]    y = 1       --> Categorical <br>
 
+* _Option1_: Either you use simple `label encoding` and `Sparse Categorical Cross Entropy`
+* _Option2_: or you use `one hot encoding` and `Sparse Categorical Cross Entropy`
+
+# Hyperparameter Tuning for NNs
