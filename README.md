@@ -1377,3 +1377,14 @@ autoencoder.fit(x_train_noisy, x_train, # NOTE: input is noisy, output is non-no
 ## Recommender System using AE
 ![alt text](image-42.png)
 similarity between movies vs movies and user vs user
+
+## Practical Aspects of designing Neural Network and debegging
+- Revision
+- NN Tunner Keras
+- NN for optimization problem
+-------------------------------
+
+## Model Interpretability
+- Model Explainability: Model Explainability is a concept where in we are able to explain the prediction that we do, in the sense that we can atleast let the user know that was the reason that the current sample got this prediction.
+- LIME Package
+----------------------------------
