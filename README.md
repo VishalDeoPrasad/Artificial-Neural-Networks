@@ -796,6 +796,11 @@ Ans - We should not use too much dropout layer, we should use 2 or 3 dropout lay
 let say we have a neural network and my input data is scaled preferly standard scaling, our X has to scaled so our Y also have to scaled. <br>
 `Advantage`: this give us advantage that non of the features get advantage, all the features are in uniform kind of importance. `so there is no difference between units of the features`.
 
+Batch normalization is a technique used to improve the training of deep neural networks by normalizing the input of each layer. It aims to address the problem of internal covariate shift, which refers to the change in the distribution of network activations due to parameter updates during training.
+
+In batch normalization, the activations of each layer are normalized by subtracting the mean and dividing by the standard deviation of the mini-batch. This normalization is applied independently to each feature dimension, effectively whitening the activations. Additionally, batch normalization introduces learnable parameters (scale and shift) to the normalized activations, allowing the model to adapt the normalization to the task.
+
+The benefits of batch normalization include faster training convergence, increased stability, and reduced sensitivity to the choice of initialization parameters. It also acts as a regularizer, reducing the need for other forms of regularization such as dropout. Overall, batch normalization has become a standard component in many deep learning architectures, improving their performance and training efficiency.
 ##### Experiment
 * let's say you have diabetis dataset, you run an logistic regrssion on diabetis dataset and see the coefficent of logistic regression on unscaled data.
 * next you scaled the data using standard scaling and then run a logistic regession then see the coefficent. and you will see the drastic difference in coefficent
@@ -1388,3 +1393,111 @@ similarity between movies vs movies and user vs user
 - Model Explainability: Model Explainability is a concept where in we are able to explain the prediction that we do, in the sense that we can atleast let the user know that was the reason that the current sample got this prediction.
 - LIME Package
 ----------------------------------
+
+
+
+# Question & Answer
+### Q1. What are evaluation metrix for classification and regression?
+**For classification tasks, common evaluation metrics include:**
+
+1. **Accuracy**: The proportion of correctly classified samples out of the total number of samples.
+
+2. **Precision**: The proportion of true positive predictions out of all positive predictions made by the model. It measures the model's ability to avoid false positives.
+
+3. **Recall (Sensitivity)**: The proportion of true positive predictions out of all actual positive samples in the dataset. It measures the model's ability to find all positive samples.
+
+4. **F1-score**: The harmonic mean of precision and recall, providing a balance between the two metrics.
+
+5. **Confusion Matrix**: A table showing the counts of true positive, true negative, false positive, and false negative predictions made by the model.
+
+`Example:`
+
+In a cancer classification problem, the goal is typically to predict whether a tumor is malignant (cancerous) or benign (non-cancerous) based on various features extracted from medical images, such as mammograms or MRI scans, or from other clinical data.
+
+Here's an example scenario:
+
+* **Problem**: Classify breast tumors as malignant or benign based on features extracted from mammogram images.
+
+* **Dataset**: You have a dataset containing mammogram images of breast tumors, along with labels indicating whether each tumor is malignant or benign. Additionally, the dataset includes features extracted from these images, such as tumor size, shape irregularity, and texture characteristics.
+
+* **Task**: Train a classification model, such as a CNN, to predict whether a given tumor is malignant or benign based on the extracted features.
+
+* **Evaluation**: After training the classification model, you evaluate its performance using metrics such as accuracy, precision, recall, and F1-score. For instance, you may find that the model achieves an accuracy of 90%, indicating that it correctly classifies 90% of tumors in the evaluation dataset as malignant or benign.
+
+* **Outcome**: A well-performing classification model can assist healthcare professionals in diagnosing breast cancer more accurately and efficiently, leading to earlier detection and improved patient outcomes.
+
+**For regression tasks, common evaluation metrics include:**
+
+1. **Mean Absolute Error (MAE)**: The average of the absolute differences between predicted and actual values. It provides a measure of the average magnitude of errors in the predictions.
+
+2. **Mean Squared Error (MSE)**: The average of the squared differences between predicted and actual values. It penalizes larger errors more than MAE.
+
+3. **Root Mean Squared Error (RMSE)**: The square root of the MSE. It provides an interpretable measure of the average magnitude of errors in the same units as the target variable.
+
+4. **R-squared (R2)**: A measure of how well the predictions explain the variance in the target variable. It ranges from 0 to 1, with higher values indicating better model fit.
+
+These evaluation metrics help assess the performance of classification and regression models and guide model selection, hyperparameter tuning, and performance comparison.
+
+### Q2. Explain accuracy, precision, recall, and  f1 with this example?
+Let's explain accuracy, precision, recall, and F1-score using the example of classifying breast tumors as malignant or benign based on mammogram images:
+
+1. **Accuracy**:
+
+Accuracy measures the proportion of correctly classified tumors out of all tumors in the dataset.
+In our example, accuracy tells us the percentage of tumors that were correctly classified as malignant or benign.
+For instance, if our model achieves an accuracy of 90%, it means that it correctly classifies 90% of all tumors in the dataset as malignant or benign.
+
+2. **Precision**:
+
+Precision measures the proportion of true positive predictions out of all positive predictions made by the model.
+In our example, precision tells us the percentage of tumors classified as malignant by the model that are actually malignant.
+For example, if the precision is 85%, it means that out of all tumors classified as malignant by the model, 85% of them are truly malignant.
+
+3. **Recall (Sensitivity):**
+
+Recall measures the proportion of true positive predictions out of all actual positive samples in the dataset.
+In our example, recall tells us the percentage of malignant tumors that were correctly identified by the model.
+For instance, if the recall is 80%, it means that the model correctly identifies 80% of all malignant tumors in the dataset.
+
+4. **F1-score:**
+
+F1-score is the harmonic mean of precision and recall, providing a balance between the two metrics.
+In our example, the F1-score considers both how many malignant tumors were correctly identified (recall) and how many of the identified malignant tumors were actually malignant (precision).
+A high F1-score indicates that the model has both high precision and high recall, striking a good balance between them.
+For example, if the F1-score is 0.85, it indicates a good balance between precision and recall in the model's predictions.
+
+In summary, accuracy measures overall correctness, precision focuses on the accuracy of positive predictions, recall emphasizes the ability to detect positives, and the F1-score provides a balanced measure of precision and recall. These metrics help evaluate the performance of the classification model in diagnosing breast tumors accurately.
+
+### Q3. What are the loss function for Classification and regression problem?
+in the context of a classification problem like the one we discussed (classifying breast tumors as malignant or benign), the loss function is typically a measure of how well the model's predictions match the actual labels. 
+
+**Common loss functions for classification tasks include:**
+
+1. **Cross-Entropy Loss (Binary or Categorical):**
+
+    - Cross-entropy loss is commonly used for classification tasks. In binary classification (like our tumor example), it measures the difference between the predicted probability distribution and the true distribution of class labels.
+    - For each sample, the cross-entropy loss is calculated as the negative log probability assigned to the true class label by the model.
+    - Lower cross-entropy loss indicates better model performance.
+
+2. **Hinge Loss:**
+
+    * Hinge loss is another loss function used for binary classification tasks, especially with Support Vector Machines (SVMs).
+    * It penalizes predictions that are close to the decision boundary but on the correct side.
+    * Hinge loss is often used in SVMs but less commonly used in neural networks for classification.
+
+**For regression tasks, common loss functions include:**
+
+1. **Mean Squared Error (MSE):**
+
+    - MSE is a widely used loss function for regression tasks.
+    - It calculates the average of the squared differences between the predicted and actual values.
+    - Lower MSE indicates better model performance.
+
+2. **Mean Absolute Error (MAE):**
+
+    * MAE measures the average absolute differences between the predicted and actual values.
+    * It is less sensitive to outliers compared to MSE.
+    * Like MSE, lower MAE indicates better model performance.
+
+These loss functions are used during the training process to optimize the model parameters (e.g., weights in neural networks) by minimizing the difference between the model's predictions and the true labels.
+
