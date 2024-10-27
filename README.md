@@ -1,4 +1,4 @@
-# Introduction to Neural Network
+# Introduction to Neural Network.
 
 ## What is Deep Learning?
 - Deep Learning is basically a field of study where in we use something known as neurons for traing the data.
